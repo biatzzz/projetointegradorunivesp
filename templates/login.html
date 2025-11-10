@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cursinho Popular Helena Pignatari</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Estilos para centralizar o conteúdo principal verticalmente */
+        .main-content.centered-login {
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center;    /* Centraliza verticalmente */
+            min-height: calc(100vh - 92px); /* Altura total da tela menos o cabeçalho (92px) */
+            padding-top: 0; 
+            padding-bottom: 0; 
+        }
+
+        /* PALETA DE CORES EM TONS DE VERDE MUSGO (#4d8d78) */
+        :root {
+            --cor-principal: #4d8d78;
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52;
+        }
+
+        .login-container {
+            background: white; 
+            padding: 2.5rem; 
+            border: 4px solid var(--cor-principal); /* Cor da borda */
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+            margin: 0; 
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 2rem; 
+            color: var(--cor-titulo); /* Cor do título */
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2rem; 
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.9rem; 
+            background-color: var(--cor-principal); /* Cor do botão principal */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+
+        .login-button:hover {
+            background-color: var(--cor-hover); /* Cor de hover */
+        }
+
+        .btn-voltar {
+            margin-top: 1.5rem;
+            display: block;
+            padding: 0.9rem;
+            background-color: var(--cor-principal); /* Cor do botão voltar */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .btn-voltar:hover {
+            background-color: var(--cor-hover); /* Cor de hover */
+        }
+        
+        .pagina-principal {
+            background-color: #f9f9f9; /* Fundo claro */
+        }
+    </style>
+</head>
+<body class="pagina-principal">
+    {# Variáveis Jinja #}
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                        <div class="logo-circle">
+                            <img
+                                alt="Logo do Cursinho Popular Helena Pignatari"
+                                src="{{ logo_header_url }}"
+                                width="80"
+                                height="80"
+                                class="logo-img"
+                            />
+                        </div>
+                    </a>
+                    <div class="logo-text">
+                        <p class="logo-subtitle">Cursinho Popular</p>
+                        <h1 class="logo-title">Helena Pignatari</h1>
+                    </div>
+                </div>
+                
+                {# Cabeçalho simplificado, apenas o logo #}
+            </div>
+        </header>
+
+        <main class="main-content centered-login">
+            <div class="login-container">
+                <h2>Login - Área da Coordenação</h2>
+                <form action="/login" method="POST">
+                    <input type="text" name="username" placeholder="Usuário" required>
+                    <input type="password" name="password" placeholder="Senha" required>
+                    <button type="submit" class="login-button">Entrar</button>
+                </form>
+                <a href="{{ url_for('home') }}" class="btn-voltar">Voltar para a Home</a>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

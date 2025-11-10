@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Curso</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* ==================================== */
+        /* PALETA DE CORES (Verde Musgo) - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        :root {
+            --cor-principal: #4d8d78; /* Verde Musgo */
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52;
+            --cor-fundo: #f9f9f9;
+        }
+
+        /* ==================================== */
+        /* ESTRUTURA E CENTRALIZAÇÃO - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            background-color: var(--cor-fundo); 
+        }
+
+        .pagina-principal {
+            background-color: var(--cor-fundo);
+        }
+        
+        /* Centralização do formulário (alinha ao topo) */
+        .main-content.centered-form {
+            display: flex;
+            justify-content: center; 
+            align-items: flex-start;    
+            min-height: calc(100vh - 92px); 
+            padding: 2rem 0; 
+            margin-top:100px; 
+        }
+
+        /* ==================================== */
+        /* ESTILO DO CONTAINER E FORMULÁRIO */
+        /* ==================================== */
+        .form-container {
+            background: white; 
+            padding: 2rem; 
+            border: 4px solid var(--cor-principal); 
+            border-radius: 10px;
+            width: 100%;
+            max-width: 900px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+            margin: 0; 
+        }
+        
+        /* Título */
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 2rem; 
+            color: var(--cor-titulo);
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2rem; 
+        }
+
+        /* Layout do Formulário (Duas Colunas) */
+        form { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 1rem 2rem; 
+            padding: 0; 
+            margin: 0; 
+            border: none; 
+            background: none;
+        }
+
+        .form-group { display: flex; flex-direction: column; }
+        .full-width { grid-column: 1 / 3; }
+        
+        input, textarea, select { 
+            padding: 0.8rem; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            width: 100%; 
+            font-size: 1rem;
+        }
+
+        label {
+            margin-bottom: 0.3rem;
+            font-weight: bold;
+            color: var(--cor-titulo);
+        }
+
+        /* Botões - ESTILO PADRONIZADO DO CADASTRAR-ALUNO.HTML */
+        .button-group { 
+            grid-column: 1 / 3; 
+            display: flex; 
+            justify-content: center; 
+            gap: 1rem; 
+            margin-top: 1.5rem; 
+        }
+
+        .btn { 
+            flex: 1; /* Garante que os 3 botões tenham a mesma largura */
+            padding: 0.9rem 1rem; 
+            
+            /* ESTILO SECUNDÁRIO (Voltar e Limpar) */
+            background-color: white; 
+            color: var(--cor-principal); 
+            border: 2px solid var(--cor-principal); 
+            
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-size: 1.1rem; 
+            font-weight: bold;
+            transition: all 0.3s;
+            text-align: center; 
+            text-decoration: none; 
+            
+            /* CORREÇÃO DE TAMANHO: Uniformidade entre <button> e <a> */
+            box-sizing: border-box; 
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hover para Secundários (Inverte cores) */
+        .btn:hover:not(.btn-submit) { 
+            background-color: var(--cor-principal); 
+            color: white;
+            border-color: var(--cor-principal);
+        }
+        
+        /* Botão Cadastrar (Principal) */
+        .btn-submit {
+            background-color: var(--cor-principal); 
+            color: white; 
+            border: 2px solid var(--cor-principal); 
+        }
+
+        /* Hover para Cadastrar */
+        .btn-submit:hover { 
+            background-color: var(--cor-hover); 
+            color: white;
+            border-color: var(--cor-hover); 
+        }
+        
+        /* Media Query para telas menores */
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr; 
+                gap: 1rem;
+            }
+            .full-width { grid-column: 1 / 2; }
+            .button-group { 
+                flex-direction: column; 
+            }
+            .btn { flex: none; width: 100%; }
+        }
+    </style>
+</head>
+<body class="pagina-principal">
+    
+    {# Estrutura do header copiada do cadastrar-aluno.html #}
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                        <div class="logo-circle">
+                            <img
+                                alt="Logo do Cursinho Popular Helena Pignatari"
+                                src="{{ logo_header_url }}"
+                                width="80"
+                                height="80"
+                                class="logo-img"
+                            />
+                        </div>
+                    </a>
+                    <div class="logo-text">
+                        <p class="logo-subtitle">Cursinho Popular</p>
+                        <h1 class="logo-title">Helena Pignatari</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        {# Main Content para centralizar #}
+        <main class="main-content centered-form">
+            <div class="form-container">
+                
+                <h2>Cadastro de Curso</h2>
+                
+                <form method="POST" action="{{ url_for('cadastrar_curso') }}" id="form-curso">
+                    
+                    <div class="form-group">
+                        <label for="nome">Nome do Curso</label>
+                        <input type="text" name="nome" id="nome" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_Professor">Professor Responsável</label>
+                        <select name="id_Professor" id="id_Professor" required>
+                            <option value="">Selecione o Professor...</option>
+                            {% for professor in professores %}
+                            <option value="{{ professor.id_Professor }}">{{ professor.nomeProfessor }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="area">Área</label>
+                        <select name="area" id="area" required>
+                            <option value="">Selecione a Área...</option>
+                            <option value="humanas">Humanas</option>
+                            <option value="exatas">Exatas</option>
+                            <option value="biologicas">Biológicas</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="turno">Turno</label>
+                        <select name="turno" id="turno" required>
+                            <option value="">Selecione o Turno...</option>
+                            <option value="matutino">Matutino</option>
+                            <option value="vespertino">Vespertino</option>
+                            <option value="noturno">Noturno</option>
+                        </select>
+                    </div>
+
+                    {# Botões na ordem padronizada: Voltar -> Limpar -> Cadastrar #}
+                    <div class="button-group full-width">
+                        <a href="{{ url_for('tela_inicial') }}" class="btn btn-voltar">Voltar</a>
+                        <button type="reset" class="btn">Limpar</button>
+                        <button type="submit" class="btn btn-submit">Cadastrar</button>
+                    </div>
+                    
+                </form>
+
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

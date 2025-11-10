@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos Cadastrados</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        /* ==================================== */
+        /* PALETA DE CORES (Verde Musgo) - Consistente com visualizar_alunos.html */
+        /* ==================================== */
+        :root {
+            --cor-principal: #4d8d78; /* Verde Musgo */
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52;
+            --cor-fundo: #f9f9f9;
+        }
+        
+        /* ==================================== */
+        /* ESTRUTURA E LAYOUT GERAL */
+        /* ==================================== */
+        body {
+            font-family: sans-serif;
+            font-size: 14px;
+            background-color: var(--cor-fundo);
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: var(--cor-fundo);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--cor-titulo);
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ==================================== */
+        /* ELEMENTOS DE CONTEÚDO (Contador) */
+        /* ==================================== */
+        .contador {
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* ==================================== */
+        /* TABELA */
+        /* ==================================== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            table-layout: fixed;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--cor-principal);
+            color: white;
+            font-size: 1rem;
+            position: sticky;
+            top: 80px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        th:hover {
+            background-color: var(--cor-hover);
+        }
+
+        td {
+            background-color: #fff;
+            position: relative;
+            text-align: center;
+        }
+        
+        /* -------------------------- */
+        /* LARGURAS DAS COLUNAS AJUSTADAS (Cursos) */
+        /* -------------------------- */
+        th:nth-child(1), td:nth-child(1) { width: 5%; }  /* ID */
+        th:nth-child(2), td:nth-child(2) { width: 20%; } /* Nome do Curso */
+        th:nth-child(3), td:nth-child(3) { width: 15%; } /* Área */
+        th:nth-child(4), td:nth-child(4) { width: 10%; } /* Turno */
+        th:nth-child(5), td:nth-child(5) { width: 20%; } /* Professor Responsável */
+        th:nth-child(6), td:nth-child(6) { 
+            width: 10%; /* Ações (AUMENTADO para 30%) */
+            padding: 0.5rem; 
+            text-align: center;
+        }
+
+        /* ==================================== */
+        /* BOTÕES DE AÇÃO (Com quebra de linha) */
+        /* ==================================== */
+        .btn-acao {
+            background-color: var(--cor-principal);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 0.5rem 1rem; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0.5rem; /* Margem vertical para empilhamento */
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-acao:hover {
+            background-color: var(--cor-hover);
+        }
+        
+        .btn-acao span.material-icons {
+            margin-right: 5px;
+            font-size: 18px !important; 
+        }
+
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background-color: var(--cor-principal);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background-color: var(--cor-hover);
+        }
+
+        /* Responsividade para telas menores */
+        @media screen and (max-width: 1200px) {
+            main {
+                overflow-x: auto;
+                padding: 1rem;
+            }
+            
+            table {
+                min-width: 900px; /* Ajustado para a nova largura total */
+            }
+        }
+    </style>
+</head>
+<body class="pagina-principal">
+    
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full">
+        {# Estrutura do header copiada do cadastrar-aluno.html #}
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                        <div class="logo-circle">
+                            <img
+                                alt="Logo do Cursinho Popular Helena Pignatari"
+                                src="{{ logo_header_url }}"
+                                width="80"
+                                height="80"
+                                class="logo-img"
+                            />
+                        </div>
+                    </a>
+                    <div class="logo-text">
+                        <p class="logo-subtitle">Cursinho Popular</p>
+                        <h1 class="logo-title">Helena Pignatari</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <h1>Cursos Cadastrados</h1>
+            <div class="contador">Total de Cursos: <span id="total-cursos">{{ cursos|length }}</span></div>
+
+            <table id="tabela-cursos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome do Curso</th>
+                        <th>Área</th>
+                        <th>Turno</th>
+                        <th>Professor Responsável</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for curso in cursos %}
+                    <tr>
+                        <td>{{ curso.id_Curso }}</td>
+                        <td>{{ curso.nome }}</td>
+                        <td>{{ curso.area.value or 'N/A' }}</td>
+                        <td>{{ curso.turno.value or 'N/A' }}</td>
+                        <td>{{ curso.professor.nomeProfessor or 'N/A' }}</td>
+                        <td>
+                            <a href="{{ url_for('editar_curso', curso_id=curso.id_Curso) }}" class="btn-acao" title="Editar">
+                                <span class="material-icons">edit</span> Editar
+                            </a>
+                            <form action="{{ url_for('excluir_curso', curso_id=curso.id_Curso) }}" method="POST" style="display: inline;">
+                                <button type="submit" class="btn-acao" title="Excluir">
+                                    <span class="material-icons">delete</span> Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ url_for('tela_inicial') }}" class="btn-voltar">Voltar para a Tela Inicial</a>
+        </main>
+    </div>
+</body>
+</html>

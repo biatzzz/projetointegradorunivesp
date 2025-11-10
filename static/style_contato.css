@@ -1,0 +1,182 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #5e1614;
+    padding: 1em 20px;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-imagem {
+    margin-right: 20px;
+}
+
+.header-imagem img {
+    max-height: 50px;
+    height: auto;
+}
+
+nav {
+    display: flex;
+}
+
+nav a,
+nav button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    color: #f7f7f7;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-left: 10px;
+}
+
+.btn.inicio {
+    background-color: #520303;
+}
+
+.btn-inicio:hover {
+    background-color: #a00000;
+}
+
+.btn-login {
+    background-color: #222;
+}
+
+.btn-login:hover {
+    background-color: #444;
+}
+
+main.contato {
+    padding: 20px;
+    max-width: 1960px;
+    margin: 20px auto;
+    display: flex;
+    gap: 30px;
+    align-items: stretch;
+    flex-direction: row;
+    flex: 1;
+}
+
+.contato-info {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #800000;
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+}
+
+.contato-info h2 {
+    color: #800000;
+    margin-bottom: 1em;
+}
+
+.contato-info .info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+strong {
+    color: #800000;
+}
+
+.contato-info .info-item img,
+.contato-info .info-item span {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.contato-info .info-item a {
+    color: #170080;
+    text-decoration: none;
+}
+
+.contato-info .info-item a:hover {
+    text-decoration: underline;
+}
+
+.contato-info .info-item-zap strong {
+    display: block;
+    margin-bottom: 0.3em;
+    color: #800000;
+}
+
+.contato-info .endereco strong {
+    display: block;
+    margin-bottom: 0.3em;
+    color: #800000;
+}
+
+.mapa {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #800000;
+    text-align: center;
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+}
+
+.mapa h2 {
+    color: #800000;
+    margin-bottom: 1em;
+    text-align: left;
+}
+
+.mapa .api-info {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: auto;
+}
+
+.mapa-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    flex: 1;
+}
+
+.mapa-container iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+footer {
+    background-color: #5e1614;
+    color: white;
+    text-align: center;
+    padding: 0.5em 0;
+    position: static;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9em;
+}

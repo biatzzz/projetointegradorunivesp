@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Aluno</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #5e1614;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            height: 60px;
+        }
+
+        h1 {
+            color: #5e1614;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        form {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            border: 4px solid #5e1614;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem 2rem;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / 3;
+        }
+
+        input, textarea, select {
+            padding: 0.7rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .button-group {
+    grid-column: 1 / 3;
+    display: flex;
+    justify-content: center; /* Alterado para centralizar */
+    gap: 2rem; /* Adicionado um espaçamento entre os botões */
+    margin-top: 1.5rem;
+}
+
+.btn {
+    /* Mantenha as outras propriedades do botão */
+    padding: 1rem 2rem;
+    background-color: #7c1d1b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none; /* Adicionado para o link de cancelar */
+}
+
+.btn:hover {
+    background-color: #5e1614;
+}
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://i.ibb.co/XZ9k2pGG/fdab45abb64cec37c5057c458f47027f.png" alt="Logo" class="logo">
+    </header>
+
+    <h1>Editar Aluno</h1>
+
+    <form method="POST" id="form-aluno">
+        <div class="form-group">
+            <label for="nome">Nome completo</label>
+            <input type="text" name="nome" id="nome" value="{{ aluno.nome }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="datanasc">Data de Nascimento</label>
+            <input type="date" name="datanasc" id="datanasc" value="{{ aluno.datanasc }}">
+        </div>
+
+        <div class="form-group">
+            <label for="cpf">CPF</label>
+            <input type="text" name="cpf" id="cpf" maxlength="14" oninput="mascaraCPF(this)" value="{{ aluno.cpf }}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="{{ aluno.email }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" name="telefone" id="telefone" maxlength="15" oninput="mascaraTelefone(this)" value="{{ aluno.telefone }}">
+        </div>
+
+        <div class="form-group">
+            <label for="datamatricula">Data de Matrícula</label>
+            <input type="date" name="datamatricula" id="datamatricula" value="{{ aluno.datamatricula }}">
+        </div>
+
+        <div class="form-group">
+            <label for="dataconclusao">Data de Conclusão</label>
+            <input type="date" name="dataconclusao" id="dataconclusao" value="{{ aluno.dataconclusao or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="curso_id">Curso</label>
+            <input type="number" name="curso_id" id="curso_id" value="{{ aluno.curso_id }}">
+        </div>
+
+        <div class="form-group full-width">
+            <label for="observacoes">Observações</label>
+            <textarea name="observacoes" id="observacoes" rows="4">{{ aluno.observacoes or '' }}</textarea>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="endereco">Endereço</label>
+            <input type="text" name="endereco" id="endereco" value="{{ aluno.endereco or '' }}">
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn">Salvar Alterações</button>
+            <a href="{{ url_for('visualizar_alunos') }}" class="btn">Cancelar</a>
+        </div>
+    </form>
+
+    <a href="{{ url_for('visualizar_alunos') }}" class="btn-voltar">Voltar para a Lista de Alunos</a>
+
+    <script>
+        function mascaraCPF(campo) {
+            let valor = campo.value.replace(/\D/g, '');
+            if (valor.length > 11) valor = valor.slice(0, 11);
+            valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+            valor = valor.replace(/(\d{3})(\d)/, '$1.$2');
+            valor = valor.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            campo.value = valor;
+        }
+
+        function mascaraTelefone(campo) {
+            let valor = campo.value.replace(/\D/g, '');
+            if (valor.length > 11) valor = valor.slice(0, 11);
+            if (valor.length <= 10) {
+                valor = valor.replace(/(\d{2})(\d)/, '($1) $2');
+                valor = valor.replace(/(\d{4})(\d)/, '$1-$2');
+            } else {
+                valor = valor.replace(/(\d{2})(\d)/, '($1) $2');
+                valor = valor.replace(/(\d{5})(\d)/, '$1-$2');
+            }
+            campo.value = valor;
+        }
+    </script>
+
+</body>
+</html>

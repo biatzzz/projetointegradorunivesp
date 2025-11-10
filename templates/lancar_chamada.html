@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lançar Chamada - {{ turma.nome or 'Turma' }}</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        /* ==================================== */
+        /* PALETA DE CORES (Verde Musgo) - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        :root {
+            --cor-principal: #4d8d78; /* Verde Musgo */
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52;
+            --cor-fundo: #f9f9f9;
+        }
+
+        /* ==================================== */
+        /* ESTRUTURA E CENTRALIZAÇÃO - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            background-color: var(--cor-fundo); 
+        }
+
+        .pagina-principal {
+            background-color: var(--cor-fundo);
+        }
+
+        .header {
+            background-color: var(--cor-principal);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Container do Header - Estrutura de Logo */
+        .header-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-link {
+            text-decoration: none;
+        }
+        
+        .logo-circle {
+            background-color: white;
+            border-radius: 50%;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            width: 60px;
+            margin-right: 15px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: 50px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            line-height: 1.1;
+        }
+
+        .logo-subtitle {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .logo-title {
+            margin: 0;
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--cor-titulo);
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            color: var(--cor-titulo);
+            font-size: 1.5rem;
+            margin-top: 20px;
+            border-bottom: 2px solid var(--cor-principal);
+            padding-bottom: 5px;
+            text-align: left;
+        }
+
+        /* ==================================== */
+        /* FORMULÁRIO (Grid 2 Colunas) - Adaptado do CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        form { 
+            max-width: 900px; 
+            margin: 2rem auto; 
+            background: #fff; 
+            padding: 2rem; 
+            border-radius: 10px; 
+            border: 4px solid var(--cor-principal); 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 1rem 2rem; 
+            text-align: left;
+        }
+        
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+        }
+        
+        .full-width { 
+            grid-column: 1 / 3; 
+        }
+        
+        label { 
+            font-weight: bold; 
+            margin-bottom: 0.3rem; 
+            color: var(--cor-titulo); 
+        }
+        
+        input, select, textarea { 
+            padding: 0.7rem; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            width: 100%; 
+            box-sizing: border-box; /* Garante que padding e border não aumentem o width */
+        }
+        
+        /* Estilos da Tabela de Chamada - Temática */
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 15px; 
+            grid-column: 1 / 3; /* Ocupa as 2 colunas */
+        }
+        
+        th, td { 
+            border: 1px solid #ddd; 
+            padding: 10px; 
+            text-align: left; 
+            word-wrap: break-word;
+        }
+        
+        th { 
+            background-color: var(--cor-principal); 
+            color: white; 
+            font-size: 1rem; 
+            text-align: center;
+        }
+        
+        td {
+            background-color: #fff;
+            text-align: center;
+        }
+
+        /* Ajuste para o select dentro da tabela */
+        table select {
+            width: auto;
+            min-width: 150px;
+        }
+
+        /* ==================================== */
+        /* BOTÕES - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        .button-group { 
+            grid-column: 1 / 3; 
+            display: flex; 
+            justify-content: flex-end; 
+            gap: 1rem; 
+            margin-top: 1.5rem; 
+        }
+        
+        .btn { 
+            padding: 0.7rem 1.5rem; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: background-color 0.3s;
+            text-decoration: none; 
+            display: inline-block; 
+            width: 180px; /* Um pouco maior para 'Lançar Chamada' */
+            text-align: center;
+        }
+        
+        /* Estilo Limpar */
+        .btn:not(.btn-submit):not(.btn-voltar) { 
+            background-color: #ddd; 
+            color: #333; 
+        } 
+        
+        .btn:not(.btn-submit):not(.btn-voltar):hover { 
+            background-color: #ccc; 
+        } 
+        
+        /* Estilo Cadastrar/Lançar (Submit) */
+        .btn-submit { 
+            background-color: var(--cor-principal); 
+            color: white; 
+        }
+        
+        .btn-submit:hover { 
+            background-color: var(--cor-hover); 
+        }
+
+        /* Estilo Voltar */
+        .btn-voltar { 
+            background-color: #fff; 
+            color: var(--cor-principal); 
+            border: 1px solid var(--cor-principal);
+        }
+        
+        .btn-voltar:hover { 
+            background-color: var(--cor-fundo); 
+        }
+    </style>
+</head>
+<body class="pagina-principal">
+
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                        <div class="logo-circle">
+                            <img
+                                alt="Logo do Cursinho Popular Helena Pignatari"
+                                src="{{ logo_header_url }}"
+                                width="80"
+                                height="80"
+                                class="logo-img"
+                            />
+                        </div>
+                    </a>
+                    <div class="logo-text">
+                        <p class="logo-subtitle">Cursinho Popular</p>
+                        <h1 class="logo-title">Helena Pignatari</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="form-container">
+                <h1>Lançar Chamada: {{ turma.nome or 'Turma' }}</h1>
+                <p><strong>Turma:</strong> {{ turma.nome or 'N/A' }} | 
+                <strong>Total de Alunos:</strong> {{ turma.alunos | length }}</p>
+
+                <form method="POST" action="{{ url_for('lancar_chamada', turma_id=turma.id_Turma) }}">
+                    
+                    {# Campo Data - Adicionado para consistência com o layout de 2 colunas #}
+                    <div class="form-group">
+                        <label for="data">Data da Aula</label>
+                        <input type="date" name="data" id="data" required>
+                    </div>
+
+                    {# Campo Tópico #}
+                    <div class="form-group">
+                        <label for="topico">Tópico da Aula</label>
+                        <input type="text" name="topico" id="topico" placeholder="Ex: Revisão de Álgebra" required>
+                    </div>
+
+                    <h2 class="full-width">Registro de Presença</h2>
+
+                    {# Tabela de presença - Ocupa a largura total (full-width) #}
+                    <table class="full-width">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nome do Aluno</th>
+                                <th>CPF</th>
+                                <th>Status da Presença</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for aluno in turma.alunos %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ aluno.nome }}</td>
+                                <td>{{ aluno.cpf or 'N/A' }}</td>
+                                <td>
+                                    <select name="status_{{ aluno.id_Aluno }}" required>
+                                        <option value="presente">Presente</option>
+                                        <option value="falta" selected>Falta</option>
+                                        <option value="falta_justificada">Falta Justificada</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    
+                    {# Botões na ordem padronizada: Voltar -> Limpar -> Cadastrar #}
+                    <div class="button-group full-width">
+                        <a href="{{ url_for('detalhes_turma', turma_id=turma.id_Turma) }}" class="btn btn-voltar">Voltar</a>
+                        <button type="reset" class="btn">Limpar</button>
+                        <button type="submit" class="btn btn-submit">Lançar Chamada</button>
+                    </div>
+                </form>
+
+            </div>
+        </main>
+    </div>
+</body>
+</html>

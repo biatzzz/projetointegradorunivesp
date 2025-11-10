@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Matrícula - {{ aluno.nome or 'Aluno' }}</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        /* ==================================== */
+        /* PALETA DE CORES (Verde Musgo - Copiado do cadastrar-aluno.html) */
+        /* ==================================== */
+        :root {
+            --cor-principal: #4d8d78; /* Verde Musgo - Header / Borda */
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52; /* Verde Escuro para Títulos */
+            --cor-fundo: #f9f9f9;
+            --cor-borda: #ccc;
+            --cor-alerta: #dc3545; /* Vermelho padrão para ação negativa */
+            --cor-alerta-hover: #c82333;
+            --cor-sucesso: #28a745;
+        }
+
+        /* ==================================== */
+        /* ESTRUTURA E LAYOUT GERAL */
+        /* ==================================== */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            background-color: var(--cor-fundo); 
+        }
+
+        header { 
+            background-color: var(--cor-principal); 
+            padding: 1rem; 
+            display: flex; 
+            align-items: center; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+        }
+        
+        .logo { 
+            height: 60px; 
+        }
+        
+        main { 
+            max-width: 1000px;
+            margin: 0 auto; 
+            padding: 2rem; 
+            text-align: center; 
+        }
+        
+        h1 { 
+            color: var(--cor-titulo); 
+            font-size: 2.5rem;
+            font-family: 'Bebas Neue', sans-serif;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h2 { 
+            color: var(--cor-titulo); 
+            font-size: 1.5rem; 
+            margin-top: 2.5rem; 
+            margin-bottom: 1rem; 
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--cor-principal);
+            display: inline-block;
+        }
+
+        /* Bloco de Informações do Aluno (Adaptado ao layout de formulário) */
+        .info-box { 
+            max-width: 800px; 
+            margin: 1rem auto 2rem; 
+            padding: 2rem; 
+            background: #fff; 
+            border-radius: 10px; 
+            border: 4px solid var(--cor-principal); /* Borda padrão do formulário */
+            text-align: left;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        .info-box p { 
+            margin: 0.7rem 0; 
+            font-size: 1.1rem;
+        }
+        .info-box strong {
+            font-weight: bold;
+            color: var(--cor-hover);
+        }
+
+        /* Formulário de Matrícula em Novo Curso */
+        .form-matricula { 
+            max-width: 800px; 
+            margin: 1.5rem auto; 
+            padding: 1.5rem; 
+            background: #fff;
+            border-radius: 10px; 
+            border: 2px dashed var(--cor-principal); /* Destacando como ação rápida */
+            box-shadow: 0 0 5px rgba(0,0,0,0.05);
+        }
+
+        .form-group { 
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            justify-content: center; 
+        }
+        
+        select, button { 
+            padding: 0.8rem 1rem; 
+            border-radius: 5px;
+            font-size: 1rem;
+            border: 1px solid var(--cor-borda);
+        }
+        
+        select {
+            flex-grow: 1;
+            background-color: #fff;
+        }
+
+        /* Tabela de Cursos Matriculados */
+        table { 
+            width: 100%; 
+            max-width: 900px; 
+            border-collapse: collapse; 
+            margin: 1rem auto; 
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden; /* Para garantir que o border-radius funcione */
+        }
+        
+        th, td { 
+            padding: 12px 15px; 
+            border: 1px solid #ddd; 
+            text-align: left;
+            word-wrap: break-word;
+        }
+        
+        th { 
+            background-color: var(--cor-principal); /* Cabeçalho da tabela com cor principal */
+            color: white; 
+            font-weight: bold;
+        }
+        
+        td { 
+            background-color: #fff; 
+        }
+
+        /* Botões de Ação na Tabela */
+        .btn-acao { 
+            padding: 0.6rem 1rem; 
+            background-color: var(--cor-alerta); /* Vermelho para Cancelar */
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            text-decoration: none; 
+            font-size: 0.9rem;
+            display: inline-flex; 
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-acao:hover { 
+            background-color: var(--cor-alerta-hover); 
+        }
+
+        /* Botão Matricular (Sucesso) */
+        .btn-success { 
+            background-color: var(--cor-sucesso); 
+        }
+        
+        .btn-success:hover { 
+            background-color: #218838; 
+        }
+
+        /* Botão Voltar (Padrão) */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 2.5rem;
+            padding: 10px 20px;
+            background-color: #6c757d; /* Cinza Neutro */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-voltar:hover {
+            background-color: #5a6268;
+        }
+
+        .material-icons {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="https://i.ibb.co/XZ9k2pGG/fdab45abb64cec37c5057c458f47027f.png" alt="Logo" class="logo">
+    </header>
+
+    <main>
+        <h1>Gestão de Matrícula</h1>
+        
+        <div class="info-box">
+            <p><strong>Aluno:</strong> {{ aluno.nome }} (ID: {{ aluno.id_Aluno }})</p>
+            <p><strong>CPF:</strong> {{ aluno.cpf }}</p>
+            <p><strong>Turma Atual:</strong> {{ aluno.turma.nome or 'N/A' }}</p>
+        </div>
+
+        <h2>Matricular em Novo Curso</h2>
+        <form class="form-matricula" method="POST" action="{{ url_for('gestao_matricula', aluno_id=aluno.id_Aluno) }}">
+            <div class="form-group">
+                <select name="curso_id" required>
+                    <option value="">Selecione um Curso Disponível...</option>
+                    {% for curso in cursos_disponiveis %}
+                    <option value="{{ curso.id_Curso }}">{{ curso.nome }} (Prof.: {{ curso.professor.nomeProfessor or 'Sem Prof.' }})</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn-acao btn-success">
+                    <span class="material-icons">add_circle_outline</span> Matricular
+                </button>
+            </div>
+        </form>
+
+        <h2>Cursos Matriculados ({{ cursos_matriculados|length }})</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Curso</th>
+                    <th>Nome do Curso</th>
+                    <th>Professor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for curso in cursos_matriculados %}
+                <tr>
+                    <td>{{ curso.id_Curso }}</td>
+                    <td>{{ curso.nome }}</td>
+                    <td>{{ curso.professor.nomeProfessor or 'N/A' }}</td>
+                    <td>
+                        <form action="{{ url_for('cancelar_matricula', aluno_id=aluno.id_Aluno, curso_id=curso.id_Curso) }}" method="POST" style="display: inline;">
+                            <button type="submit" class="btn-acao" onclick="return confirm('Tem certeza que deseja cancelar a matrícula em {{ curso.nome }}?')">
+                                <span class="material-icons">remove_circle_outline</span> Cancelar Matrícula
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center;">Este aluno não está matriculado em nenhum curso.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{{ url_for('visualizar_alunos') }}" class="btn-voltar">
+            <span class="material-icons">arrow_back</span> Voltar para a Lista de Alunos
+        </a>
+    </main>
+
+</body>
+</html>

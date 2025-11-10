@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursinho Popular Helena Pignatari - Painel</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        /* ==================================== */
+        /* PALETA DE CORES (Verde Musgo) - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        :root {
+            --cor-principal: #4d8d78; /* Verde Musgo */
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52;
+            --cor-fundo: #f9f9f9;
+        }
+
+        /* ==================================== */
+        /* ESTRUTURA E LAYOUT GERAL - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            background-color: var(--cor-fundo); 
+        }
+
+        .header {
+            background-color: var(--cor-fundo);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        /* Container do Header - Estrutura de Logo */
+        .header-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-link {
+            text-decoration: none;
+        }
+
+        .logo-circle {
+            background-color: white;
+            border-radius: 50%;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            width: 60px;
+            margin-right: 15px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: 50px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            line-height: 1.1;
+        }
+
+        .logo-subtitle {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .logo-title {
+            margin: 0;
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        /* ==================================== */
+        /* ESTILOS ESPECÍFICOS DO DASHBOARD (Cores atualizadas) */
+        /* ==================================== */
+        .coordena-dashboard-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align:center;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-family: 'Bebas Neue', cursive;
+            color: var(--cor-titulo); /* Atualizado */
+            margin-bottom: 3rem;
+            border-bottom: 3px solid var(--cor-principal); /* Atualizado */
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .dashboard-subtitle {
+            font-size: 1.8rem;
+            font-family: 'Bebas Neue', cursive;
+            color: var(--cor-titulo); /* Atualizado */
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-section {
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-links-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .coordena-dashboard-btn {
+            display: inline-block;
+            padding: 1.5rem 2.5rem;
+            min-width: 250px;
+            background-color: var(--cor-principal); /* Atualizado */
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .coordena-dashboard-btn:hover {
+            background-color: var(--cor-hover); /* Atualizado */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+        
+        .dashboard-separator {
+            margin: 3rem 0;
+            border: 0;
+            border-top: 2px solid var(--cor-principal); /* Atualizado */
+            opacity: 0.5;
+        }
+
+        /* ==================================== */
+        /* FOOTER (Cores atualizadas) */
+        /* ==================================== */
+        footer {
+            background-color: var(--cor-principal); /* Atualizado */
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .footer-logo-img {
+            border-radius: 50%;
+            background-color: white;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body class="pagina-principal">
+
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+    {% set logo_cursinho_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full flex flex-col">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                        <div class="logo-circle">
+                            <img
+                                alt="Logo do Cursinho Popular Helena Pignatari"
+                                src="{{ logo_header_url }}"
+                                width="80"
+                                height="80"
+                                class="logo-img"
+                            />
+                        </div>
+                    </a>
+                    <div class="logo-text">
+                        <p class="logo-subtitle">Cursinho Popular</p>
+                        <h1 class="logo-title">Helena Pignatari</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="flex-grow">
+            <div class="coordena-dashboard-container">
+                <h1 class="dashboard-title">Painel de Coordenação</h1>
+
+                <div class="dashboard-section">
+                    <h2 class="dashboard-subtitle">Cadastros</h2>
+                    <div class="dashboard-links-group">
+                        <a href="{{ url_for('cadastrar_aluno') }}" class="coordena-dashboard-btn">Cadastrar Aluno</a>
+                        <a href="{{ url_for('cadastrar_turma') }}" class="coordena-dashboard-btn">Cadastrar Turma</a>
+                        <a href="{{ url_for('cadastrar_professor') }}" class="coordena-dashboard-btn">Cadastrar Professor</a>
+                        <a href="{{ url_for('cadastrar_curso') }}" class="coordena-dashboard-btn">Cadastrar Curso</a>
+                    </div>
+                </div>
+
+                <hr class="dashboard-separator">
+
+                <div class="dashboard-section">
+                    <h2 class="dashboard-subtitle">Visualização e Ações</h2>
+                    <div class="dashboard-links-group">
+                        <a href="{{ url_for('visualizar_alunos') }}" class="coordena-dashboard-btn">Visualizar Alunos</a>
+                        <a href="{{ url_for('visualizar_turmas') }}" class="coordena-dashboard-btn">Visualizar Turmas</a>
+                        <a href="{{ url_for('visualizar_professores') }}" class="coordena-dashboard-btn">Visualizar Professores</a>
+                        <a href="{{ url_for('visualizar_cursos') }}" class="coordena-dashboard-btn">Visualizar Cursos</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        
+    </div>
+
+</body>
+</html>

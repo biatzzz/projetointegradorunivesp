@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursinho Popular Helena Pignatari - Home</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+    <div class="relative min-h-screen w-full">
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+    {% set logo_cursinho_url = url_for('static', filename='logo_cursinho.png') %}
+    {% set whatsapp_url = url_for('static', filename='assets/a454171d6ac8cd81ab95c2d5a8c5bc9b45005d78.png') %}
+    {% set instagram_url = url_for('static', filename='assets/f0358f477acbdb9ba981da30c998ec64fd68388a.png') %}
+    
+    <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                    <div class="logo-area">
+                        <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                            <div class="logo-circle">
+                                <img
+                                    alt="Logo do Cursinho Popular Helena Pignatari"
+                                    src="{{ logo_header_url }}"
+                                    width="80"
+                                    height="80"
+                                    class="logo-img"
+                                />
+                            </div>
+                        </a>
+                        <div class="logo-text">
+                            <p class="logo-subtitle">Cursinho Popular</p>
+                            <h1 class="logo-title">Helena Pignatari</h1>
+                        </div>
+                    </div>
+
+                <nav class="main-menu no-print" id="main-menu" aria-label="Menu principal">
+                    <div class="menu-links">
+                        <a href="{{ url_for('processo_seletivo') }}" class="menu-link">Processo Seletivo</a>
+                        <a href="{{ url_for('sobre') }}" class="menu-link">Sobre</a>
+                    </div>
+                </nav>
+
+                <a href="{{ url_for('login') }}" aria-label="Acessar Área da Coordenação" class="coordena-button no-print">
+                    <span class="material-icons icon">people</span>
+                    <span class="coordena-text">Área da Coordenação</span>
+                </a>
+             </div>
+        </header> 
+        <div class="secao-sobre">
+            <div class="conteudo-max-largura">
+                <h1 class="titulo-principal">
+                    Sobre o Cursinho Helena Pignatari
+                </h1>
+                <div class="linha-separadora"></div>
+                
+                <div class="card-secao">
+                    <div class="missao-conteudo">
+                        <div class="missao-logo-container">
+                            <img alt="Logo Cursinho Helena Pignatari" class="missao-logo" src="{{ logo_cursinho_url }}" />
+                        </div>
+                        <div>
+                            <h2 class="titulo-secao">
+                                Nossa Missão
+                            </h2>
+                            <p class="paragrafo-missao">
+                                O Cursinho Popular Helena Pignatari nasceu com o objetivo de democratizar o acesso ao ensino superior de qualidade. 
+                                Acreditamos que todos os estudantes, independentemente de sua condição socioeconômica, merecem ter a oportunidade 
+                                de se preparar adequadamente para os principais vestibulares do país.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-secao">
+                    <h2 class="titulo-secao titulo-secao-historia">
+                        Nossa História
+                    </h2>
+                    <div class="historico-espacamento">
+                        <p class="paragrafo-historia">
+                            Fundado em 2015, o Cursinho Helena Pignatari começou como uma iniciativa pequena, com apenas 30 alunos 
+                            e um grupo dedicado de 10 professores voluntários. O nome homenageia Helena Pignatari, uma educadora 
+                            que dedicou sua vida à causa da educação popular em nossa comunidade.
+                        </p>
+                        <p class="paragrafo-historia">
+                            Ao longo dos anos, crescemos significativamente. Hoje, atendemos mais de 200 alunos por ano, contamos 
+                            com uma equipe de 40 professores voluntários e temos orgulho de ter ajudado mais de 500 estudantes a 
+                            ingressarem em universidades públicas e privadas de todo o país.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card-secao">
+                    <h2 class="titulo-secao titulo-secao-historia">
+                        Nossos Valores
+                    </h2>
+                    <div class="grid-valores">
+                        <div class="card-valor">
+                            <h3 class="titulo-valor">
+                                Educação de Qualidade
+                            </h3>
+                            <p class="paragrafo-valor">
+                                Acreditamos que educação de excelência não deve ser privilégio de poucos. Nossos professores são 
+                                especialistas comprometidos com o sucesso de cada aluno.
+                            </p>
+                        </div>
+
+                        <div class="card-valor">
+                            <h3 class="titulo-valor">
+                                Inclusão Social
+                            </h3>
+                            <p class="paragrafo-valor">
+                                Promovemos o acesso igualitário ao ensino superior, priorizando estudantes de baixa renda e 
+                                criando um ambiente acolhedor e diverso.
+                            </p>
+                        </div>
+
+                        <div class="card-valor">
+                            <h3 class="titulo-valor">
+                                Voluntariado
+                            </h3>
+                            <p class="paragrafo-valor">
+                                Nossa força vem do trabalho voluntário de professores, coordenadores e colaboradores que 
+                                acreditam na transformação através da educação.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-secao">
+                    <h2 class="titulo-secao titulo-secao-historia">
+                        Nossos Números
+                    </h2>
+                    <div class="grid-numeros">
+                        <div class="card-numero">
+                            <p class="numero-grande">
+                                500+
+                            </p>
+                            <p class="label-numero">
+                                Alunos Aprovados
+                            </p>
+                        </div>
+
+                        <div class="card-numero">
+                            <p class="numero-grande">
+                                40
+                            </p>
+                            <p class="label-numero">
+                                Professores Voluntários
+                            </p>
+                        </div>
+
+                        <div class="card-numero">
+                            <p class="numero-grande">
+                                200+
+                            </p>
+                            <p class="label-numero">
+                                Alunos Ativos
+                            </p>
+                        </div>
+
+                        <div class="card-numero">
+                            <p class="numero-grande">
+                                9
+                            </p>
+                            <p class="label-numero">
+                                Anos de História
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-secao">
+                    <h2 class="titulo-secao titulo-secao-historia">
+                        Nossa Equipe
+                    </h2>
+                    
+                    <div class="margem-inferior-grande">
+                        <h3 class="titulo-subsecao">
+                            Coordenação
+                        </h3>
+                        <div class="grid-coordenacao">
+                            <div class="card-coordenacao">
+                                <p class="nome-coordenador">
+                                    Prof. Dr. João Silva
+                                </p>
+                                <p class="cargo-coordenador">
+                                    Coordenador Geral
+                                </p>
+                            </div>
+
+                            <div class="card-coordenacao">
+                                <p class="nome-coordenador">
+                                    Profa. Maria Santos
+                                </p>
+                                <p class="cargo-coordenador">
+                                    Coordenadora Pedagógica
+                                </p>
+                            </div>
+
+                            <div class="card-coordenacao">
+                                <p class="nome-coordenador">
+                                    Carlos Oliveira
+                                </p>
+                                <p class="cargo-coordenador">
+                                    Coordenador Administrativo
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="titulo-subsecao">
+                            Áreas de Ensino
+                        </h3>
+                        <div class="grid-areas">
+                            <div class="card-area">
+                                <p class="texto-area">
+                                    • Linguagens e Códigos (Português, Literatura, Inglês)
+                                </p>
+                            </div>
+                            <div class="card-area">
+                                <p class="texto-area">
+                                    • Ciências Humanas (História, Geografia, Filosofia, Sociologia)
+                                </p>
+                            </div>
+                            <div class="card-area">
+                                <p class="texto-area">
+                                    • Ciências da Natureza (Física, Química, Biologia)
+                                </p>
+                            </div>
+                            <div class="card-area">
+                                <p class="texto-area">
+                                    • Matemática e suas Tecnologias
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-secao">
+                    <h2 class="titulo-secao titulo-secao-historia">
+                        Infraestrutura
+                    </h2>
+                    <p class="paragrafo-infraestrutura">
+                        Oferecemos uma estrutura completa para garantir o melhor ambiente de aprendizado:
+                    </p>
+                    <div class="grid-infraestrutura">
+                        <div class="item-infraestrutura">
+                            <div class="icone-infraestrutura">
+                                <span class="check-mark">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="titulo-infraestrutura">
+                                    Salas de Aula Equipadas
+                                </h3>
+                                <p class="descricao-infraestrutura">
+                                    Todas com projetor multimídia, quadro branco e climatização
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="item-infraestrutura">
+                            <div class="icone-infraestrutura">
+                                <span class="check-mark">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="titulo-infraestrutura">
+                                    Biblioteca
+                                </h3>
+                                <p class="descricao-infraestrutura">
+                                    Acervo com mais de 1.000 livros e materiais didáticos
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="item-infraestrutura">
+                            <div class="icone-infraestrutura">
+                                <span class="check-mark">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="titulo-infraestrutura">
+                                    Material Didático Gratuito
+                                </h3>
+                                <p class="descricao-infraestrutura">
+                                    Apostilas completas e simulados sem custo para os alunos
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="item-infraestrutura">
+                            <div class="icone-infraestrutura">
+                                <span class="check-mark">✓</span>
+                            </div>
+                            <div>
+                                <h3 class="titulo-infraestrutura">
+                                    Apoio Psicopedagógico
+                                </h3>
+                                <p class="descricao-infraestrutura">
+                                    Orientação vocacional e suporte emocional
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  <footer class="footer" data-name="FOOTER">
+      <div class="footer-container">
+        
+          <div class="footer-col">
+            <div class="footer-logo-group">
+              <img
+                alt="Logo Cursinho"
+                class="footer-logo-img" 
+                src="{{ logo_cursinho_url }}"
+              />
+              <div>
+                <p class="footer-logo-subtitle">Cursinho Popular</p>
+                <p class="footer-logo-title">Helena Pignatari</p>
+              </div>
+            </div>
+            <p class="footer-slogan">
+              EDUCAÇÃO POPULAR DE QUALIDADE PARA TODOS OS ESTUDANTES.
+              PREPARANDO VOCÊ PARA O FUTURO COM DEDICAÇÃO E COMPROMISSO.
+            </p>
+          </div>
+
+        <div class="footer-col">
+          <p class="footer-header">Links Rápidos</p>
+          <a href="{{ url_for('sobre') }}" class="footer-link">Sobre</a>
+          <a href="{{ url_for('sobre') }}" class="footer-text-item">Seja Voluntário</a>
+          <a href="{{ url_for('processo_seletivo') }}" class="footer-link"> Processo Seletivo
+          </a>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-header">Contato</p>
+
+          <div class="footer-contact-item">
+            <div class="footer-icon-wrapper">
+              <img alt="Instagram" class="footer-icon-img" src="{{ instagram_icon_url }}" />
+            </div>
+            <div class="footer-contact-text">
+              <span class="block">Instagram</span>
+              <span class="block">@cursinhohelena</span>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <div class="footer-icon-wrapper">
+              <i class="material-icons footer-icon-material">mail</i>
+            </div>
+            <div class="footer-contact-text">
+              <span class="block">E-mail</span>
+              <span class="block">xpto@gmail.com</span>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <div class="footer-icon-wrapper">
+              <img alt="WhatsApp" class="footer-icon-img" src="{{ whatsapp_icon_url }}" />
+            </div>
+            <div class="footer-contact-text">
+              <span class="block">WhatsApp</span>
+              <span class="block">(11) 99999-8888</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-header">Coordenação</p>
+          <span class="footer-text-item">Coordenadores</span>
+          <span class="footer-text-item">Apoio Pedagógico</spam>
+        </div>
+      </div>
+       <dic><p class="copyright">© 2025 Cursinho Popular Helena Pignatari. Todos os direitos reservados.</p>            </div>
+    </footer>
+        </div>
+</body>
+</html>

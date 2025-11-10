@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursinho Popular Helena Pignatari - Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+
+<body class="pagina-principal">
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+    {% set logo_cursinho_url = url_for('static', filename='logo_cursinho.png') %}
+    {% set whatsapp_url = url_for('static', filename='a454171d6ac8cd81ab95c2d5a8c5bc9b45005d78.png') %}
+    {% set instagram_url = url_for('static', filename='f0358f477acbdb9ba981da30c998ec64fd68388a.png') %}
+    
+    <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                    <div class="logo-area">
+                        <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                            <div class="logo-circle">
+                                <img
+                                    alt="Logo do Cursinho Popular Helena Pignatari"
+                                    src="{{ logo_header_url }}"
+                                    width="80"
+                                    height="80"
+                                    class="logo-img"
+                                />
+                            </div>
+                        </a>
+                        <div class="logo-text">
+                            <p class="logo-subtitle">Cursinho Popular</p>
+                            <h1 class="logo-title">Helena Pignatari</h1>
+                        </div>
+                    </div>
+
+                <nav class="main-menu no-print" id="main-menu" aria-label="Menu principal">
+                    <div class="menu-links">
+                        <a href="{{ url_for('processo_seletivo') }}" class="menu-link">Processo Seletivo</a>
+                        <a href="{{ url_for('sobre') }}" class="menu-link">Sobre</a>
+                    </div>
+                </nav>
+
+                <a href="{{ url_for('login') }}" aria-label="Acessar Área da Coordenação" class="coordena-button no-print">
+                    <span class="material-icons icon">people</span>
+                    <span class="coordena-text">Área da Coordenação</span>
+                </a>
+             </div>
+            </header>        
+
+        <div class="relative pt-[137.5px] px-[32px] pb-[40px]">
+            <div class="flex flex-col md:flex-row items-start gap-[24px] max-w-[1336px] mx-auto">
+                <div class="h-[254px] w-[267px] shrink-0">
+                    <img
+                        alt="Logo do cursinho"
+                        class="rounded-[16px] w-full h-full object-cover"
+                        src="{{ logo_cursinho_url }}"
+                    />
+                </div>
+
+                <div class="text-[28px] md:text-[32px] text-black max-w-[486px]">
+                    <p class="mb-2">
+                        Prepare-se para os principais vestibulares do país com nosso método
+                        comprovado e professores especialistas.
+                    </p>
+                    <p>Educação popular de qualidade para todos os estudantes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-[#ECEBE4] px-[32px] py-[32px] min-h-[1154px]">
+            <div class="max-w-[1336px] mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-[32px]">
+                    
+                    <div>
+                        <h2 class="text-[#4d8d78] text-[40px] mb-[24px]">
+                            Calendário de Aulas
+                        </h2>
+                        <div class="h-[1px] bg-[#4d8d78] mb-[24px]" />
+                        <p class="text-[#4d8d78] text-[24px] mb-[16px]">
+                            Programação Semanal
+                        </p>
+
+                        <div class="p-4 bg-[#f0f4f2] rounded-lg shadow-md">
+                            <h2 class="text-[24px] font-bold text-[#4d8d78] mb-4">Agenda Escolar</h2>
+                            
+                            <h3 class="text-[#4d8d78] text-[24px] mb-[16px]">Turma 1 / SÁBADO</h3>
+                            {% set saturday_classes = [
+                                { "subject": "Matemática", "teacher": "Carlos", "topic": "Álgebra", "time": "08:00 - 10:00", "mode": "Presencial" },
+                                { "subject": "História", "teacher": "Ana", "topic": "Idade Média", "time": "10:15 - 12:00", "mode": "Online" },
+                                { "subject": "Biologia", "teacher": "Rafael", "topic": "Genética", "time": "13:00 - 14:30", "mode": "Presencial" },
+                                { "subject": "Física", "teacher": "Marcos", "topic": "Mecânica", "time": "14:45 - 16:00", "mode": "Presencial" },
+                                { "subject": "Redação", "teacher": "Juliana", "topic": "Texto dissertativo", "time": "16:15 - 17:30", "mode": "Online" }
+                            ] %}
+                            
+                            {% for class_item in saturday_classes %}
+                            <div class="relative mb-[8px]">
+                                <div class="bg-white h-[41px] rounded-[16px] w-full flex items-center px-[12px] gap-[12px]">
+                                    <p class="text-[#4d8d78] text-[16px] font-bold flex-1">{{ class_item.subject }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] font-bold flex-1">{{ class_item.teacher }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] flex-2">{{ class_item.topic }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] flex-1">{{ class_item.time }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] flex-1">{{ class_item.mode }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <div class="mt-[40px]" />
+                            
+                            <h3 class="text-[#4d8d78] text-[24px] mb-[16px]">Turma 1 / DOMINGO</h3>
+                            {% set sunday_classes = [
+                                { "subject": "Química", "teacher": "Fernanda", "topic": "Reações orgânicas", "time": "08:00 - 10:00", "mode": "Presencial" },
+                                { "subject": "Geografia", "teacher": "Lucas", "topic": "Geopolítica", "time": "10:15 - 12:00", "mode": "Online" },
+                                { "subject": "Literatura", "teacher": "Beatriz", "topic": "Modernismo", "time": "13:00 - 14:30", "mode": "Presencial" },
+                                { "subject": "Filosofia", "teacher": "João", "topic": "Ética", "time": "14:45 - 16:00", "mode": "Presencial" },
+                                { "subject": "Sociologia", "teacher": "Camila", "topic": "Movimentos sociais", "time": "16:15 - 17:30", "mode": "Online" }
+                            ] %}
+
+                            {% for class_item in sunday_classes %}
+                            <div class="relative mb-[8px]">
+                                <div class="bg-white h-[41px] rounded-[16px] w-full flex items-center px-[12px] gap-[12px]">
+                                    <p class="text-[#4d8d78] text-[16px] font-bold flex-1">{{ class_item.subject }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] font-bold flex-1">{{ class_item.teacher }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] flex-2">{{ class_item.topic }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] flex-1">{{ class_item.time }}</p>
+                                    <p class="text-[#4d8d78] text-[16px] flex-1">{{ class_item.mode }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="flex justify-end mt-[24px] no-print">
+                            <button onclick="window.print()" class="btn-primary">
+                                Imprimir Agenda
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div>
+                        <h2 class="text-[#4d8d78] text-[40px] mb-[16px]">
+                            Notícias Importantes
+                        </h2>
+                        <div class="h-[1px] bg-[#4d8d78] mb-[24px]" />
+                        <p class="text-[#4d8d78] text-[16px] mb-[24px]">
+                            Fique por dentro das informações sobre vestibulares e do cursinho! Não perca!
+                        </p>
+                        
+                        {% macro news_card(badge_text, badge_color, title, description, date, time) %}
+                            <div class="relative bg-white p-[24px] rounded-[16px] shadow-md mb-[24px]">
+                                <span class="absolute top-[16px] right-[16px] text-[12px] font-bold text-white px-[8px] py-[4px] rounded-[8px]" style="background-color: {{ badge_color }}">
+                                    {{ badge_text }}
+                                </span>
+                                <h3 class="text-[#4d8d78] text-[24px] font-bold mb-[8px]">{{ title }}</h3>
+                                <p class="text-black text-[16px] mb-[16px]">{{ description }}</p>
+                                <div class="flex items-center text-[#4d8d78] text-[16px] gap-[16px]">
+                                    <div class="flex items-center gap-[4px]">
+                                        <span class="material-icons text-[20px]">calendar_today</span>
+                                        <span>{{ date }}</span>
+                                    </div>
+                                    <div class="flex items-center gap-[4px]">
+                                        <span class="material-icons text-[20px]">schedule</span>
+                                        <span>{{ time }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endmacro %}
+
+                        {{ news_card(
+                            "ENEM", "#f40d0d", "A prova está próxima!",
+                            "Não perca a aula especial de Ciências da Natureza.", "25 de Outubro", "12:00"
+                        ) }}
+
+                        {{ news_card(
+                            "Simulado", "#4d8d78", "Teste seus conhecimentos!",
+                            "Participe de nosso simulado da terceira apostila. Uma ótima oportunidade de praticar.", "25 de Outubro", "12:00"
+                        ) }}
+                        
+                        {{ news_card(
+                            "Coordenação", "#4d8d78", "Hora de conversar!",
+                            "Reunião de Coordenadores e Alunos", "15 de Novembro", "12:00"
+                        ) }}
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section bg-[#4d8d78] py-[64px] px-[32px] text-center">
+            <h2 class="text-white text-[32px] font-bold mb-[16px]">Pronto para Começar?</h2>
+            <p class="text-white text-[20px] mb-[32px]">Conheça nosso processo seletivo e venha estudar conosco.</p>
+            <a href="{{ url_for('processo_seletivo') }}" class="btn-primary" style="background-color: white; color: #4d8d78; border-color: white;">
+                Inscreva-se Agora
+            </a>
+        </div>
+
+        <footer class="w-full bg-[#4d8d78] py-[40px] px-[32px]" data-name="FOOTER">
+            <div class="max-w-[1336px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-[32px] text-[#fff4bd] font-bebas">
+                
+                <div class="flex flex-col gap-[16px]">
+                    <div class="flex items-center gap-[12px]">
+                        <img
+                            alt="Logo Cursinho"
+                            class="w-[40px] h-[40px] object-contain" 
+                            src="{{ logo_cursinho_url }}"
+                        />
+                        <div>
+                            <p class="text-[16px] leading-snug">Cursinho Popular</p>
+                            <p class="text-[32px] leading-snug">Helena Pignatari</p>
+                        </div>
+                    </div>
+                    <p class="text-[14px] text-white leading-normal max-w-[220px]">
+                        EDUCAÇÃO POPULAR DE QUALIDADE PARA TODOS OS ESTUDANTES.
+                        PREPARANDO VOCÊ PARA O FUTURO COM DEDICAÇÃO E COMPROMISSO.
+                    </p>
+                </div>
+
+                <div class="flex flex-col gap-[12px]">
+                    <p class="text-[32px]">Links Rápidos</p>
+                    <a href="{{ url_for('sobre') }}" class="text-[20px] hover:underline">Sobre</a>
+                    <p class="text-[20px]">Seja Voluntário</p> 
+                    <a href="{{ url_for('processo_seletivo') }}" class="text-[20px] hover:underline">
+                        Processo Seletivo
+                    </a>
+                </div>
+
+                <div class="flex flex-col gap-[16px]">
+                    <p class="text-[32px]">Contato</p>
+
+                    <div class="flex items-start gap-[8px]">
+                        <div class="w-[24px] h-[24px] flex items-center justify-center">
+                            <img alt="Instagram" class="w-full h-full object-contain" src="{{ instagram_url }}" />
+                        </div>
+                        <div class="text-[20px] leading-snug">
+                            <span class="block">Instagram</span>
+                            <span class="block">@cursinhohelena</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-[8px]">
+                        <div class="w-[24px] h-[24px] flex items-center justify-center">
+                            <svg
+                                class="w-full h-full"
+                                viewBox="0 0 20 18"
+                                preserveAspectRatio="xMidYMid meet"
+                                fill="#fff4bd"
+                            >
+                                <path d="{{ email_svg_path }}" />
+                            </svg>
+                        </div>
+                        <div class="text-[20px] leading-snug">
+                            <span class="block">E-mail</span>
+                            <span class="block">xpto@gmail.com</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-[8px]">
+                        <div class="w-[24px] h-[24px] flex items-center justify-center">
+                            <img alt="WhatsApp" class="w-full h-full object-contain" src="{{ whatsapp_url }}" />
+                        </div>
+                        <div class="text-[20px] leading-snug">
+                            <span class="block">WhatsApp</span>
+                            <span class="block">(11) 99999-8888</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-[12px]">
+                    <p class="text-[32px]">Coordenação</p>
+                    <p class="text-[20px]">Coordenadores</p>
+                    <p class="text-[20px]">Apoio Pedagógico</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

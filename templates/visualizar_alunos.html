@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alunos Cadastrados</title>
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <style>
+        /* ==================================== */
+        /* PALETA DE CORES (Verde Musgo) */
+        /* ==================================== */
+        :root {
+            --cor-principal: #4d8d78; /* Verde Musgo */
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52;
+            --cor-fundo: #f9f9f9;
+        }
+        
+        /* ==================================== */
+        /* ESTRUTURA E LAYOUT GERAL */
+        /* ==================================== */
+        body {
+            font-family: sans-serif;
+            font-size: 14px;
+            background-color: var(--cor-fundo);
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: var(--cor-fundo);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: var(--cor-titulo);
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ==================================== */
+        /* ELEMENTOS DE CONTEÚDO (Contador, Filtros) */
+        /* ==================================== */
+        .contador {
+            background-color: var(--cor-principal);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        .filtros {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filtros input, .filtros select {
+            padding: 0.6rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-width: 150px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .filtros input:focus, .filtros select:focus {
+             border-color: var(--cor-principal);
+        }
+
+        .sem-resultados {
+            display: none;
+            color: var(--cor-titulo);
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        /* ==================================== */
+        /* TABELA */
+        /* ==================================== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            table-layout: fixed;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--cor-principal);
+            color: white;
+            font-size: 1rem;
+            position: sticky;
+            top: 80px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        th:hover {
+            background-color: var(--cor-hover);
+        }
+
+        th.sorted-asc::after {
+            content: " ↑";
+        }
+
+        th.sorted-desc::after {
+            content: " ↓";
+        }
+
+        td {
+            background-color: #fff;
+            position: relative;
+            text-align: center;
+        }
+        
+        /* -------------------------- */
+        /* LARGURAS DAS COLUNAS AJUSTADAS (TOTAL 100%) */
+        /* -------------------------- */
+        th:nth-child(1), td:nth-child(1) { width: 8%; } /* Nome */
+        th:nth-child(2), td:nth-child(2) { width: 7%; }  /* Data Nasc */
+        th:nth-child(3), td:nth-child(3) { width: 9%; }  /* CPF */
+        th:nth-child(4), td:nth-child(4) { width: 8%; } /* Email */
+        th:nth-child(5), td:nth-child(5) { width: 8%; }  /* Telefone */
+        th:nth-child(6), td:nth-child(6) { width: 8%; }  /* Matrícula */
+        th:nth-child(7), td:nth-child(7) { width: 8%; }  /* Conclusão */
+        th:nth-child(8), td:nth-child(8) { width: 8%; }  /* Endereço */
+        th:nth-child(9), td:nth-child(9) { width: 8%; }  /* Observações */
+        th:nth-child(10), td:nth-child(10) { width: 6%; } /* Turma */
+        th:nth-child(11), td:nth-child(11) { 
+            width: 10%; /* Ações (Padronizado como visualizar_alunos.html) */
+            text-align: center;
+                   }
+
+        /* ==================================== */
+        /* BOTÕES DE AÇÃO COM LABEL E MAIOR DISTÂNCIA */
+        /* ==================================== */
+        .btn-acao {
+            background-color: var(--cor-principal);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            text-decoration: none;
+            /* Remove width/height fixos e adiciona padding */
+            padding: 0.5rem 1rem; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            /* Aumenta a distância entre os botões */
+            margin: 0.25rem 0.5rem; 
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-acao:hover {
+            background-color: var(--cor-hover);
+        }
+        
+        .btn-acao span.material-icons {
+            margin-right: 5px; /* Espaçamento entre o ícone e o texto */
+            font-size: 18px !important; 
+        }
+
+        .btn-success {
+            background-color: #4d8d78; 
+        }
+
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background-color: var(--cor-principal);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-voltar:hover {
+            background-color: var(--cor-hover);
+        }
+
+        /* Tooltip para celulas com texto muito longo */
+        td:hover::after {
+            content: attr(data-full);
+            position: absolute;
+            left: 0;
+            top: 100%;
+            z-index: 1000;
+            background: #fff;
+            padding: 5px;
+            border: 1px solid #ddd;
+            white-space: normal;
+            width: 250px;
+            display: block;
+            text-align: left;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Responsividade para telas menores */
+        @media screen and (max-width: 1200px) {
+            main {
+                overflow-x: auto;
+                padding: 1rem;
+            }
+            
+            table {
+                min-width: 1300px; /* Aumentado para acomodar a nova coluna de ações */
+            }
+        }
+    </style>
+</head>
+<body class="pagina-principal">
+    
+    {# Estrutura do header copiada do cadastrar_curso.html #}
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                        <div class="logo-circle">
+                            <img
+                                alt="Logo do Cursinho Popular Helena Pignatari"
+                                src="{{ logo_header_url }}"
+                                width="80"
+                                height="80"
+                                class="logo-img"
+                            />
+                        </div>
+                    </a>
+                    <div class="logo-text">
+                        <p class="logo-subtitle">Cursinho Popular</p>
+                        <h1 class="logo-title">Helena Pignatari</h1>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <h1>Alunos Cadastrados</h1>
+            <div class="contador">Total de Alunos: <span id="total-alunos">{{ alunos|length }}</span></div>
+
+            <div class="filtros">
+                <input type="text" id="filtro-nome" placeholder="Filtrar por nome" oninput="filtrarTabela()">
+                <input type="text" id="filtro-cpf" placeholder="Filtrar por CPF" oninput="filtrarTabela()">
+                <select id="filtro-curso" onchange="filtrarTabela()">
+                    <option value="">Todos as Turmas</option>
+                    {% for nome_turma in alunos|map(attribute='turma.nome')|unique %}
+                    <option value="{{ nome_turma }}">{{ nome_turma }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="sem-resultados" id="sem-resultados">Nenhum aluno encontrado com os filtros aplicados.</div>
+
+            <table id="tabela-alunos">
+                <thead>
+                    <tr>
+                        <th onclick="ordenarTabela(0)">Nome</th>
+                        <th onclick="ordenarTabela(1)" data-sort-type="date">Data Nasc.</th>
+                        <th onclick="ordenarTabela(2)">CPF</th>
+                        <th onclick="ordenarTabela(3)">Email</th>
+                        <th onclick="ordenarTabela(4)">Telefone</th>
+                        <th onclick="ordenarTabela(5)" data-sort-type="date">Matrícula</th>
+                        <th onclick="ordenarTabela(6)" data-sort-type="date">Conclusão</th>
+                        <th>Endereço</th>
+                        <th onclick="ordenarTabela(7)">Observações</th>
+                        <th onclick="ordenarTabela(8)">Turma</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aluno in alunos %}
+                    <tr id="aluno-{{ loop.index }}" data-nome="{{ aluno.nome|lower }}" data-cpf="{{ aluno.cpf }}" data-curso="{{ aluno.turma_id }}">
+                        <td data-full="{{ aluno.nome }}">{{ aluno.nome }}</td>
+                        <td data-sort="{{ aluno.dt_nasc }}" data-full="{{ aluno.dt_nasc }}">{{ aluno.dt_nasc }}</td>
+                        <td data-full="{{ aluno.cpf }}">{{ aluno.cpf }}</td>
+                        <td data-full="{{ aluno.email }}">{{ aluno.email }}</td>
+                        <td data-full="{{ aluno.telefone }}">{{ aluno.telefone }}</td>
+                        <td data-sort="{{ aluno.datamatricula }}" data-full="{{ aluno.datamatricula }}">{{ aluno.datamatricula }}</td>
+                        <td data-sort="{{ aluno.dataconclusao }}" data-full="{{ aluno.dataconclusao }}">{{ aluno.dataconclusao }}</td>
+                        <td data-full="{{ aluno.endereco }}">{{ aluno.endereco }}</td>
+                        <td data-full="{{ aluno.observacoes }}">{{ aluno.observacoes }}</td>
+                        <td data-full="{{ aluno.turma.nome }}">{{ aluno.turma.nome }}</td>
+                        <td>
+                            {# Botão Editar com Label #}
+                            <a href="{{ url_for('editar_aluno', aluno_id=aluno.id_Aluno) }}" class="btn-acao" title="Editar">
+                                <span class="material-icons">edit</span> Editar
+                            </a>
+                            
+                            {# Botão Excluir com Label (dentro do form) #}
+                            <form action="{{ url_for('excluir_aluno', aluno_id=aluno.id_Aluno) }}" method="POST" style="display: inline;">
+                                <button type="submit" class="btn-acao" title="Excluir">
+                                    <span class="material-icons">delete</span> Excluir
+                                </button>
+                            </form>
+                            
+                            {# Botão Matrículas com Label #}
+                            <a href="{{ url_for('gestao_matricula', aluno_id=aluno.id_Aluno) }}" class="btn-acao btn-success" title="Matrículas">
+                                <span class="material-icons">assignment_ind</span> Matrículas
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ url_for('tela_inicial') }}" class="btn-voltar">Voltar para a Tela Inicial</a>
+        </main>
+    </div>
+
+    <script>
+        // Funções JavaScript (Ordenação e Filtro)
+        let colunaOrdenada = -1;
+        let ordemAscendente = true;
+        
+        const atualizarContadorAlunos = () => {
+            const totalAlunosElem = document.getElementById('total-alunos');
+            const linhas = document.querySelectorAll('#tabela-alunos tbody tr:not([style*="display: none"])');
+            totalAlunosElem.textContent = linhas.length;
+        };
+        
+        const filtrarTabela = () => {
+            const filtroNome = document.getElementById('filtro-nome').value.toLowerCase();
+            const filtroCpf = document.getElementById('filtro-cpf').value.toLowerCase();
+            const filtroCurso = document.getElementById('filtro-curso').value.toLowerCase(); 
+            const linhas = document.querySelectorAll('#tabela-alunos tbody tr');
+            let visiveis = 0;
+        
+            linhas.forEach(linha => {
+                const nome = linha.cells[0].textContent.trim().toLowerCase();
+                const cpf = linha.cells[2].textContent.trim().toLowerCase();
+                // A coluna da Turma é a 9ª (índice 9)
+                const curso = linha.cells[9].textContent.trim().toLowerCase();
+        
+                const correspondeNome = nome.includes(filtroNome);
+                const correspondeCpf = cpf.includes(filtroCpf);
+                const correspondeCurso = filtroCurso === '' || curso.includes(filtroCurso);
+        
+                if (correspondeNome && correspondeCpf && correspondeCurso) {
+                    linha.style.display = '';
+                    visiveis++;
+                } else {
+                    linha.style.display = 'none';
+                }
+            });
+        
+            document.getElementById('total-alunos').textContent = visiveis;
+            document.getElementById('sem-resultados').style.display = visiveis === 0 ? 'block' : 'none';
+        };
+        
+        const ordenarTabela = (coluna) => {
+            const tabela = document.getElementById('tabela-alunos');
+            const tbody = tabela.querySelector('tbody');
+            const linhas = Array.from(tbody.querySelectorAll('tr')).filter(l => l.style.display !== 'none');
+        
+            document.querySelectorAll('#tabela-alunos th').forEach(th => {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+            });
+        
+            if (colunaOrdenada === coluna) {
+                ordemAscendente = !ordemAscendente;
+            } else {
+                colunaOrdenada = coluna;
+                ordemAscendente = true;
+            }
+        
+            const cabecalho = tabela.tHead.rows[0].cells[coluna];
+            cabecalho.classList.add(ordemAscendente ? 'sorted-asc' : 'sorted-desc');
+        
+            linhas.sort((a, b) => {
+                let valorA = a.cells[coluna].getAttribute('data-sort') || a.cells[coluna].textContent.trim();
+                let valorB = b.cells[coluna].getAttribute('data-sort') || b.cells[coluna].textContent.trim();
+                const sortType = cabecalho.getAttribute('data-sort-type');
+        
+                if (sortType === 'date') {
+                    valorA = valorA ? new Date(valorA) : new Date(0);
+                    valorB = valorB ? new Date(valorB) : new Date(0);
+                }
+        
+                if (valorA < valorB) return ordemAscendente ? -1 : 1;
+                if (valorA > valorB) return ordemAscendente ? 1 : -1;
+                return 0;
+            });
+        
+            linhas.forEach(linha => tbody.appendChild(linha));
+        };
+        
+        const configurarBotoesExcluir = () => {
+            const forms = document.querySelectorAll('form[action*="/excluir-aluno/"]');
+            
+            forms.forEach(form => {
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    const alunoId = this.getAttribute('action').split('/').pop();
+                    const confirmarExclusao = confirm(`Tem certeza que deseja excluir o aluno com ID ${alunoId}?`);
+                    
+                    if (confirmarExclusao) {
+                        this.submit();
+                    }
+                });
+            });
+        };
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            atualizarContadorAlunos();
+            configurarBotoesExcluir();
+            filtrarTabela(); 
+        });
+    </script>
+
+</body>
+</html>

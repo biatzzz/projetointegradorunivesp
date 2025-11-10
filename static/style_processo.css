@@ -1,0 +1,905 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.pagina-principal {
+    background-color: #f5f5f5; /* substitui bg-background */
+    color: #333333;           /* substitui text-foreground */
+}
+
+/* ----------------------------------
+ * Estilos do Cabeçalho
+ * ---------------------------------- */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 40;
+    
+    background-color: #FFFCEF; 
+    backdrop-filter: blur(4px); 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
+
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+/* ----------------------------------
+ * Estilos Utilitários (Mapeamento Tailwind)
+ * ---------------------------------- */
+.min-h-screen {
+    min-height: 100vh;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.relative {
+    position: relative;
+}
+
+
+/* ----------------------------------
+ * Estilos do Container e da Logo
+ * ---------------------------------- */
+
+.header-container {
+    max-width: 1336px; 
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 32px; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    flex-shrink: 0;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-circle {
+    width: 50px; 
+    height: 50px;
+    background-color: rgba(255, 252, 239, 0.75);
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-img {
+    width: 50px; 
+    height: 50px;
+    object-fit: contain;
+    display: block;
+}
+
+/* ----------------------------------
+ * Estilos Adicionais (Mantidos)
+ * ---------------------------------- */
+
+.logo-text {
+    line-height: 1.1;
+}
+
+.logo-subtitle,
+.logo-title {
+    font-family: 'Bebas Neue', sans-serif;
+    color: #4d8d78;
+    margin: 0;
+}
+
+.logo-subtitle {
+    font-size: 24px;
+}
+
+.logo-title {
+    font-size: 32px;
+}
+
+.main-menu {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.menu-links {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+    text-transform: uppercase;
+}
+
+.menu-link {
+    color: #4d8d78;
+    font-family: 'Bebas Neue', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 3px;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: color 0.3s ease;
+}
+
+.menu-link:hover,
+.menu-link:focus {
+    color: #2f6b5c;
+    outline: none;
+    box-shadow: 0 0 0 2px #4d8d78;
+}
+
+.coordena-button {
+    display: flex;
+    font-family: 'Bebas Neue', sans-serif;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition-property: background-color, color, border-color;
+}
+
+.coordena-button:hover {
+    background-color: white;
+    color: #4d8d78;
+}
+
+.icon {
+    font-size: 24px;
+}
+
+.coordena-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    white-space: nowrap;
+}
+
+
+.btn-primary {
+    padding: 10px 10px;
+    border: 1px solid #4d8d78;
+    background-color: #4d8d78;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition-property: background-color, color, border-color;
+    line-height: 1;
+}
+
+.btn-primary:hover {
+    background-color: white;
+    color: #4d8d78;
+}
+
+/* Reescrevendo o coordena-button específico */
+.coordena-button {
+    display: inline-flex;
+    font-size: large;
+    font-family: 'Bebas Neue', sans-serif;
+    align-items: center;
+    justify-content: center;
+    background-color: #4d8d78;
+    color: white;
+    height: 56px;
+    width: 224px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    transition-property: background-color;
+    white-space: nowrap;
+}
+
+.coordena-button:hover {
+    background-color: #3d7d68;
+}
+
+.schedule-wrapper {
+    padding: 1rem; 
+    background-color: #f0f4f2; 
+    border-radius: 0.5rem; 
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06); 
+}
+
+.schedule-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4d8d78;
+    margin-bottom: 1rem; 
+}
+
+.day-schedule-title {
+    color: #4d8d78;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.class-row {
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.class-row-content {
+    background-color: white;
+    height: 41px;
+    border-radius: 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+    gap: 12px;
+}
+
+.class-col {
+    color: #4d8d78;
+    font-size: 16px;
+}
+
+.class-col.bold {
+    font-weight: bold; 
+}
+
+.class-col.flex-1 {
+    flex: 1;
+}
+
+.class-col.flex-2 {
+    flex: 2;
+}
+
+/* Estilo para separar as seções de dias */
+.mt-40px {
+    margin-top: 40px;
+}
+
+/* Estilo para o container do botão de impressão */
+.print-button-container {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 24px; 
+}
+
+
+
+/* ----------------------------------
+ * 3. SEÇÃO DE MARKETING (Marketing Section)
+ * ---------------------------------- */
+/* Marketing Section (O Card Principal) */
+.marketing-section {
+    padding: 32px; /* Aumenta o padding interno para o conteúdo respirar */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06); /* Sombra suave */
+    margin-top: 60px;
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center; 
+}
+
+/* Garante que a imagem dentro do container preencha o novo tamanho */
+.marketing-logo-container img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%; 
+}
+
+.marketing-text-container {
+    color: var(--primary-color); 
+    max-width: 486px;
+    display: flex;
+    gap: 32px;
+    margin-right: 48px;
+    flex-direction: column;
+    letter-spacing: 1.1;
+   
+}
+
+/* NOVO: Estilo de impacto para o headline (com Bebas Neue) */
+.marketing-headline {
+    color: var(--primary-color); 
+    font-family: 'Bebas Neue', sans-serif;
+    gap: 32px;
+    font-size: 24px; /* Tamanho base (mobile/tablet) */
+    margin-left: 32px;
+    line-height: 1.1;
+}
+
+/* Aumenta o tamanho da fonte em telas maiores (desktop) */
+@media (min-width: 768px) {
+    .marketing-headline {
+        font-size: 16px; /* Aumentado para mais impacto */
+    }
+}
+
+.main-content {
+    padding-top: 200px; 
+}
+
+.main-flex-container {
+    display: flex;
+    /* ALTERAÇÃO: Reduzindo o gap entre a Agenda e as Notícias de 24px para 16px */
+    gap: 24px; 
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+#printable-schedule-container-wrapper {
+    flex-grow: 1; 
+}
+
+#news-cards-container {
+    flex-shrink: 0;
+    margin-top: 16px;
+    width: 505px; 
+}
+
+/* ----------------------------------
+ * ESTILOS DO COMPONENTE AGENDA
+ * ---------------------------------- */
+.schedule-title, .day-schedule-title {
+    color: #4d8d78; 
+    font-weight: bold;
+    margin-bottom: 16px; 
+}
+
+.schedule-title {
+    font-size: 24px; 
+    margin-top: 0;
+}
+
+.day-schedule-title {
+    font-size: 20px; 
+    margin-top: 0px;
+}
+
+.schedule-wrapper * {
+    list-style: none !important; 
+}
+
+.class-row {
+    position: relative; 
+    margin-bottom: 8px; 
+    padding-left: 0px; 
+}
+
+.class-row-content {
+    height: 42px; /* h-[41px] */
+    border-radius: 8px; /* rounded-[16px] */
+    display: flex; /* flex */
+    align-items: center; /* items-center */
+    padding-left: 8px; /* px-[12px] */
+    padding-right: 0px;
+    gap: 16px; /* gap-[12px] */
+    flex-wrap: nowrap;
+    min-width: 0;
+}   
+
+.class-col {
+    color: #4d8d78; 
+    font-size: 16px; 
+    white-space: nowrap; /* Mantém o conteúdo em uma linha */
+    overflow: hidden; /* Oculta o conteúdo que excede */
+    text-overflow: ellipsis; /* Adiciona '...' ao conteúdo oculto */
+    min-width: 0;
+}
+
+.class-col.bold {
+    font-weight: bold;
+}
+
+.class-col.flex-1 {
+    flex-basis: 20%; 
+    flex-grow: 1;
+}
+
+.class-col.flex-2 {
+    flex-basis: 40%; 
+    flex-grow: 2;
+}
+
+.print-button-container {
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 24px; 
+}
+
+/* ----------------------------------
+ * ESTILOS DO COMPONENTE NEWS CARD
+ * ---------------------------------- */
+.news-card-wrapper {
+    background-color: white;
+    height: 212px; 
+    border-radius: 16px; 
+    width: 100%; 
+    padding: 16px; 
+    margin-bottom: 32px; 
+    border: 1px solid #4d8d78; 
+    box-sizing: border-box; 
+    display: flex;
+    flex-direction: column;
+    text-decoration: none; 
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.news-card-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-badge-container {
+    height: 30px; 
+    border-radius: 8px; 
+    width: 140px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.news-badge-text {
+    font-size: 16px;
+    text-align: center;
+    color: white;
+}
+
+.news-text {
+    color: #4d8d78;
+    font-size: 16px;
+    margin: 0;
+}
+
+.news-title {
+    margin-bottom: 8px; 
+    font-weight: bold;
+}
+
+.news-description {
+    margin-bottom: 16px; 
+    flex-grow: 1; 
+    line-height: 1.2;
+}
+
+.news-datetime-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: auto; 
+}
+
+.news-icon-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.material-icons.news-icon {
+    font-size: 24px;
+    color: #4d8d78;
+}
+
+/* Responsividade: Pilha os elementos em telas pequenas (mobile) */
+@media (max-width: 992px) {
+    .main-flex-container {
+        flex-direction: column;
+    }
+    #news-cards-container {
+        width: 100%; 
+    }
+    
+    .news-card-wrapper {
+        height: auto; 
+    }
+}
+
+/* ----------------------------------
+ * ESTILOS DA SEÇÃO CTA (Call to Action) - ATUALIZADO
+ * ---------------------------------- */
+
+/* Variáveis para o novo dimensionamento dos cards (limpas e consolidadas) */
+:root {
+    --primary-color: #4d8d78;
+    --background-color: #ffffff;
+    --spacing-xs: 16px;
+    --spacing-sm: 18px;
+    --spacing-md: 32px;
+    --spacing-lg: 41px;
+    --spacing-xl: 48px;
+    --spacing-xxl: 64px;
+    --text-size-sm: 14px;
+    --text-size-md: 20px;
+    --text-size-lg: 48px;
+    
+    /* Novo Dimensionamento */
+    --card-width: 480px;      
+    --card-height: 180px;     
+    --card-padding-x: 100px;  
+}
+
+/* Container principal */
+.cta-section-container {
+    background-color: var(--background-color);
+    padding-top: var(--spacing-xxl);
+    padding-bottom: var(--spacing-xxl);
+}
+
+/* Título */
+.cta-title {
+    color: var(--primary-color);
+    font-size: var(--text-size-lg);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    line-height: 1.2;
+    /* ALTERAÇÃO: Aplicando a fonte 'Bebas Neue' */
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Wrapper dos cards */
+.cta-cards-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+    flex-wrap: wrap; 
+}
+
+/* Estilo base do Card */
+.cta-card {
+    background-color: var(--background-color);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    height: var(--card-height);
+    align-items: center;
+    padding: var(--spacing-sm) var(--card-padding-x); 
+    border-radius: var(--spacing-xs); 
+    width: var(--card-width);
+    text-decoration: none; 
+    transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out; 
+    color: var(--primary-color); 
+}
+
+.cta-card-title {
+    color: var(--primary-color);
+    font-size: var(--text-size-md); /* 20px */
+    text-align: center;
+}
+
+.cta-card-subtitle {
+    color: var(--primary-color);
+    font-size: var(--text-size-sm); /* 14px */
+    text-align: center;
+}
+
+/* Estilo de hover - Fundo verde 40% opacidade */
+.cta-card:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+    background-color: rgba(77, 141, 120, 0.4); 
+}
+
+/* Estilo para cards clicáveis */
+.cta-card--clickable {
+    cursor: pointer;
+}
+
+/* Container e Ícone Material Icons */
+.cta-icon-container {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.material-icons.cta-icon {
+    font-size: 48px; 
+    color: var(--primary-color); 
+    line-height: 1; 
+}
+
+/* Media Query: Responsividade básica */
+@media (max-width: 1350px) {
+    .cta-card {
+        padding-left: 50px;
+        padding-right: 50px;
+        width: 400px;
+    }
+    .cta-cards-wrapper {
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 768px) {
+    .cta-cards-wrapper {
+        flex-direction: column;
+        align-items: center;
+        padding-left: var(--spacing-xs);
+        padding-right: var(--spacing-xs);
+    }
+    .cta-card {
+        width: 100%;
+        max-width: var(--card-width);
+        padding-left: var(--spacing-md);
+        padding-right: var(--spacing-md);
+    }
+    .cta-title {
+        font-size: 36px;
+        padding-left: var(--spacing-xs);
+        padding-right: var(--spacing-xs);
+    }
+    .cta-section-container {
+        padding-top: var(--spacing-xl);
+        padding-bottom: var(--spacing-xl);
+    }
+}
+
+/* ... (Seções 1 a 8 mantidas) ... */
+
+/* ==================================
+ * 9. COMPONENTE RODAPÉ (FOOTER)
+ * ================================== */
+
+.footer {
+    width: 100%;
+    background-color: #4d8d78; /* bg-[#4d8d78] */
+    padding: 32px 32px; /* py-[40px] px-[32px] */
+}
+
+.footer-container {
+    max-width: 1336px; /* max-w-[1336px] */
+    margin: 0 auto; /* mx-auto */
+    
+    display: grid; /* grid */
+    grid-template-columns: 1fr; /* grid-cols-1 (padrão mobile) */
+    gap: 32px; /* gap-[32px] */
+    
+    color: #fff4bd; /* text-[#fff4bd] */
+    font-family: 'Bebas Neue', sans-serif; /* font-['Bebas_Neue:Regular',sans-serif] */
+}
+
+/* Colunas */
+.footer-col {
+    display: flex;
+    line-height: 1.2;
+    flex-direction: column;
+}
+
+/* Coluna 1: Logo e Slogan */
+.footer-logo-group {
+    display: flex; /* flex */
+    align-items: center; /* items-center */
+    gap: 12px; /* gap-[12px] */
+    margin-bottom: 12px; /* Ajuste para o gap no React */
+    margin-top: 12px;
+    
+}
+
+.footer-logo-img {
+    width: 50px; /* w-[40px] */
+    height: 50px; /* h-[40px] */
+    object-fit: contain; /* object-contain */
+    border-radius: 60%;
+}
+
+.footer-logo-subtitle {
+    font-size: 16px; /* text-[16px] */
+    line-height: 1.2; /* leading-snug */
+    margin: 0;
+}
+
+.footer-logo-title {
+    font-size: 32px; /* text-[32px] */
+    line-height: 1.2; /* leading-snug */
+    margin: 0;
+}
+
+.footer-slogan {
+    font-size: 14px; /* text-[14px] */
+    color: white; /* text-white */
+    line-height: normal; /* leading-normal */
+    max-width: 220px; /* max-w-[220px] */
+    margin: 0;
+}
+
+/* Colunas 2, 3 e 4 */
+.footer-header {
+    font-size: 32px; /* text-[32px] */
+    margin-bottom: 12px; /* Ajuste para o gap do React */
+}
+
+.footer-link, .footer-text-item {
+    font-size: 20px; /* text-[20px] */
+    color: inherit;
+    text-decoration: none;
+    line-height: 1.2;
+    margin-bottom: 8px; /* Espaçamento entre itens */
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
+
+/* Coluna 3: Contato */
+.footer-contact-item {
+    display: flex; /* flex */
+    align-items: flex-start; /* items-start */
+    gap: 8px; /* gap-[8px] */
+    margin-bottom: 16px; /* Ajuste do gap-[16px] do React */
+}
+
+.footer-icon-wrapper {
+    width: 24px; /* w-[24px] */
+    height: 24px; /* h-[24px] */
+    flex-shrink: 0;
+    /* Alinha o ícone dentro do wrapper para Material Icons */
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-icon-img, .footer-icon-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* NOVO: Estilo para o ícone Material Design */
+.footer-icon-material {
+    font-size: 24px; /* Tamanho do ícone */
+    line-height: 1; 
+    color: #fff4bd; /* Cor (text-[#fff4bd]) */
+}
+
+.footer-contact-text {
+    font-size: 20px; /* text-[20px] */
+    line-height: 1.2; /* leading-snug */
+}
+
+/* Responsividade do Rodapé (Desktop md:grid-cols-4) */
+@media (min-width: 768px) {
+    .footer-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+/* ----------------------------------
+ * 9. ESTILOS DO PROCESSO SELETIVO
+ * ---------------------------------- */
+
+.processo-seletivo-container {
+    padding-top: 64px;
+    padding-bottom: 32px;
+    max-width: 100%;
+}
+
+.processo-seletivo-title {
+    color: var(--primary-color);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 8px;
+    line-height: 1.1;
+}
+
+.processo-seletivo-subtitle {
+    color: #333333;
+    font-size: 20px;
+    text-align: center;
+    margin-bottom: 32px;
+    margin-top:32px;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 0 16px;
+}
+
+/* Container do Formulário (O Card) */
+.form-container {
+    max-width: 800px;
+    width: 100%;
+    background-color: white;
+    padding: 32px;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 32px; /* Espaçamento entre as seções principais */
+}
+
+/* Títulos de Seção */
+.form-section-title {
+    color: var(--primary-color);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Agrupamento de Campos */
+.form-group {
+    display: grid;
+    gap: 24px;
+}
+
+.form-group.grid-2 {
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+    .form-group.grid-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.form-group.grid-1 {
+    grid-template-columns: 1fr;
+}
+
+
+/* Labels dos Campos */
+.form-label {
+    display: block;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--primary-color);
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* Campos de Input, Select e Textarea */
+.form-field {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+    /* Estilo de foco (como se fosse Tailwind focus:border-[#4d8d78]) */
+    border-color: #4d8d78; 
+}
+
+.form-field:focus {
+    outline: none;
+    border-color: #3d7d68;
+    box-shadow: 0 0 0 1px #3d7d68;
+}
+
+.textarea-field {
+    resize: vertical;
+}
+
+/* Botão de Envio */
+.submit-button {
+    background-color: #4d8d78;
+    color: white;
+    padding: 12px 48px;
+    border: none;
+    border-radius: 16px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    height: auto;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover {
+    background-color: #3d7d68;
+}

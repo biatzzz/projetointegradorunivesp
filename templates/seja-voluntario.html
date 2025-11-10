@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursinho Popular Helena Pignatari - Home</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="pagina-principal">
+{% set logo_header_url = url_for('static', filename='logo.png') %}
+    {% set logo_cursinho_url = url_for('static', filename='logo_cursinho.png') %}
+
+    {# Variáveis de imagem para o rodapé (mantidas pois Instagram e WhatsApp não têm ícones no Material Icons por padrão) #}
+    {% set instagram_icon_url = url_for('static', filename='instagram.png') %}
+    {% set whatsapp_icon_url = url_for('static', filename='whats.png') %}
+    {% set svg_paths = {'p29554480': 'M20 4c-.7-.3-1.4-.5-2.2-.6.7.4 1.3 1 1.6 1.7-.6-.4-1.3-.8-2-.9.7-.4 1.4-.6 2.2-.6v.2l-2 .6c-1.3 1-2.9 1.6-4.6 1.7-1.7 0-3.3-.6-4.6-1.7L4 4v-.2c.8 0 1.5.2 2.2.6C6.1 4.5 5.5 4 4.8 3.3c.3-.7 1-1.3 1.7-1.7-.7.1-1.4.5-2 .9L2 2.2V4c0 1 0 1.9.3 2.8 0 .1 0 .2.1.2 0 0 0 .1.1.1.1 0 .2 0 .3-.1.2-.2.3-.4.4-.6v-1c0-.1.1-.3.2-.4.1-.1.2-.2.3-.2.1 0 .2 0 .3.1.2.2.3.4.4.6v1c0 .1-.1.3-.2.4-.1.1-.2.2-.3.2-.1 0-.2 0-.3-.1-.2-.2-.3-.4-.4-.6v-1c0-.1.1-.3.2-.4.1-.1.2-.2.3-.2.1 0 .2 0 .3.1.2.2.3.4.4.6v1c0 .1-.1.3-.2.4-.1.1-.2.2-.3.2z'} %}
+
+   <div class="relative min-h-screen w-full">
+        <header class="header">
+            <div class="header-container">
+                <div class="logo-area">
+                    <a href="{{ url_for('home') }}" aria-label="Voltar para a página inicial" class="logo-link">
+                        <div class="logo-circle">
+                            <img
+                                alt="Logo do Cursinho Popular Helena Pignatari"
+                                src="{{ logo_header_url }}"
+                                width="80"
+                                height="80"
+                                class="logo-img"
+                            />
+                        </div>
+                    </a>
+                    <div class="logo-text">
+                        <p class="logo-subtitle">Cursinho Popular</p>
+                        <h1 class="logo-title">Helena Pignatari</h1>
+                    </div>
+                </div>
+                
+                <nav class="main-menu no-print" id="main-menu" aria-label="Menu principal">
+                    <div class="menu-links">
+                        <a href="{{ url_for('processo_seletivo') }}" class="menu-link">Processo Seletivo</a>
+                        <a href="{{ url_for('sobre') }}" class="menu-link">Sobre</a>
+                    </div>
+                </nav>
+
+               <a 
+                    href="{{ url_for('login') }}" 
+                    aria-label="Acessar Área da Coordenação" 
+                    class="coordena-button"
+                    role="button"
+                >
+                    <span class="material-icons icon">people</span>
+                    <span class="coordena-text">Área da Coordenação</span>
+                </a>
+            </div>
+        </header>
+        
+        <!-- Mobile Menu Overlay (Menu Hamburguer) -->
+        <div class="mobile-menu-overlay" id="mobile-menu">
+            <button class="close-button" aria-label="Fechar menu" id="menu-close">
+                <span class="material-icons">close</span>
+            </button>
+            <nav class="mobile-nav-menu">
+                <a href="/" class="mobile-nav-link">Home</a>
+                <a href="/sobre" class="mobile-nav-link">Sobre Nós</a>
+                <a href="/processo-seletivo" class="mobile-nav-link">Processo Seletivo</a>
+                <a href="/voluntarios" class="mobile-nav-link mobile-nav-link--active">Seja Voluntário</a>
+                <a href="/login" class="mobile-nav-link mobile-nav-link--button">
+                    Área do Aluno
+                </a>
+            </nav>
+        </div>
+        
+        <!-- Conteúdo Principal -->
+        <main class="volunteer-container bg-gray-100">
+            <div class="volunteer-grid">
+                
+                <!-- Coluna de Informações e Vaga -->
+                <div class="info-card">
+                    <h2 class="form-title">SEJA UM VOLUNTÁRIO</h2>
+                    
+                    <p>
+                        O Cursinho Popular Helena Pignatari é um projeto social e educacional que oferece aulas preparatórias para o ENEM e vestibulares, totalmente gratuitas, focando em estudantes de baixa renda. Se você é apaixonado por educação e quer fazer a diferença, junte-se a nós!
+                    </p>
+
+                    <h3>Vagas Abertas</h3>
+                    <p>Buscamos professores voluntários para as seguintes áreas:</p>
+                    <ul>
+                        <li>Matemática e suas Tecnologias</li>
+                        <li>Ciências da Natureza (Física, Química e Biologia)</li>
+                        <li>Ciências Humanas (História, Geografia, Sociologia e Filosofia)</li>
+                        <li>Linguagens (Português, Redação e Inglês/Espanhol)</li>
+                    </ul>
+                    
+                    <h3>Requisitos</h3>
+                    <ol>
+                        <li>**Compromisso:** Disponibilidade para ministrar aulas regularmente.</li>
+                        <li>**Formação/Experiência:** Ser estudante universitário, formado ou possuir experiência na área.</li>
+                        <li>**Proatividade:** Capacidade de planejar aulas criativas.</li>
+                    </ol>
+                </div>
+
+                <!-- Formulário de Inscrição -->
+                <div class="info-card">
+                    <h2 class="form-title">FORMULÁRIO DE INSCRIÇÃO</h2>
+                    
+                    <form id="volunteer-form" class="form-style">
+
+                        <div class="form-group grid-1">
+                            <div>
+                                <label for="nome" class="form-label">Nome Completo *</label>
+                                <input type="text" id="nome" name="nomeCompleto" required class="form-field" placeholder="Seu nome completo">
+                            </div>
+                        </div>
+
+                        <div class="form-group grid-2">
+                            <div>
+                                <label for="email" class="form-label">E-mail *</label>
+                                <input type="email" id="email" name="email" required class="form-field" placeholder="seu.email@exemplo.com">
+                            </div>
+                            <div>
+                                <label for="telefone" class="form-label">Telefone *</label>
+                                <input type="tel" id="telefone" name="telefone" required class="form-field" placeholder="(DD) 99999-8888">
+                            </div>
+                        </div>
+
+                        <div class="form-group grid-1">
+                            <div>
+                                <label for="area" class="form-label">Área de Interesse para Voluntariado *</label>
+                                <select id="area" name="areaInteresse" required class="form-field">
+                                    <option value="" disabled selected>Selecione a área que deseja lecionar</option>
+                                    <option value="matematica">Matemática</option>
+                                    <option value="fisica">Física</option>
+                                    <option value="quimica">Química</option>
+                                    <option value="biologia">Biologia</option>
+                                    <option value="historia">História</option>
+                                    <option value="geografia">Geografia</option>
+                                    <option value="sociologia">Sociologia / Filosofia</option>
+                                    <option value="portugues">Português / Literatura</option>
+                                    <option value="redacao">Redação</option>
+                                    <option value="ingles">Inglês / Espanhol</option>
+                                    <option value="apoio">Apoio Pedagógico / Administrativo</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group grid-1">
+                            <div>
+                                <label for="formacao" class="form-label">Sua Formação/Experiência *</label>
+                                <input type="text" id="formacao" name="formacao" required class="form-field" placeholder="Ex: Estudante de Engenharia Civil (3º ano) / Bacharel em Letras">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group grid-1">
+                            <div>
+                                <label for="motivacao" class="form-label">Por que você quer ser um Voluntário no Cursinho Helena Pignatari? *</label>
+                                <textarea id="motivacao" name="motivacao" required rows="6" class="form-field" placeholder="Fale sobre sua paixão por ensinar, sua disponibilidade e o que você espera do voluntariado..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group grid-1">
+                            <div>
+                                <label class="form-label">Disponibilidade (Informe o período que tem disponibilidade) *</label>
+                                <textarea id="disponibilidade" name="disponibilidade" required rows="3" class="form-field" placeholder="Ex: Sábados de 8h às 12h / Segunda e Quarta à noite, das 19h às 22h..."></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-submit-wrapper">
+                            <button type="submit" class="submit-button">
+                                Enviar Inscrição para Voluntariado
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        
+ <footer class="footer" data-name="FOOTER">
+      <div class="footer-container">
+        
+          <div class="footer-col">
+            <div class="footer-logo-group">
+              <img
+                alt="Logo Cursinho"
+                class="footer-logo-img" 
+                src="{{ logo_cursinho_url }}"
+              />
+              <div>
+                <p class="footer-logo-subtitle">Cursinho Popular</p>
+                <p class="footer-logo-title">Helena Pignatari</p>
+              </div>
+            </div>
+            <p class="footer-slogan">
+              EDUCAÇÃO POPULAR DE QUALIDADE PARA TODOS OS ESTUDANTES.
+              PREPARANDO VOCÊ PARA O FUTURO COM DEDICAÇÃO E COMPROMISSO.
+            </p>
+          </div>
+
+        <div class="footer-col">
+          <p class="footer-header">Links Rápidos</p>
+          <a href="{{ url_for('sobre') }}" class="footer-link">Sobre</a>
+          <a href="{{ url_for('sobre') }}" class="footer-text-item">Seja Voluntário</a>
+          <a href="{{ url_for('processo_seletivo') }}" class="footer-link"> Processo Seletivo
+          </a>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-header">Contato</p>
+
+          <div class="footer-contact-item">
+            <div class="footer-icon-wrapper">
+              <img alt="Instagram" class="footer-icon-img" src="{{ instagram_icon_url }}" />
+            </div>
+            <div class="footer-contact-text">
+              <span class="block">Instagram</span>
+              <span class="block">@cursinhohelena</span>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <div class="footer-icon-wrapper">
+              <i class="material-icons footer-icon-material">mail</i>
+            </div>
+            <div class="footer-contact-text">
+              <span class="block">E-mail</span>
+              <span class="block">xpto@gmail.com</span>
+            </div>
+          </div>
+
+          <div class="footer-contact-item">
+            <div class="footer-icon-wrapper">
+              <img alt="WhatsApp" class="footer-icon-img" src="{{ whatsapp_icon_url }}" />
+            </div>
+            <div class="footer-contact-text">
+              <span class="block">WhatsApp</span>
+              <span class="block">(11) 99999-8888</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <p class="footer-header">Coordenação</p>
+          <span class="footer-text-item">Coordenadores</span>
+          <span class="footer-text-item">Apoio Pedagógico</spam>
+        </div>
+      </div>
+       <dic><p class="copyright">© 2025 Cursinho Popular Helena Pignatari. Todos os direitos reservados.</p>            </div>
+    </footer>
+
+    </div>
+
+    <!-- Script para o Menu Hamburguer e Formulário -->
+    <script>
+        // Função para simular o toast (substitui 'alert' e 'toast' do shadcn/ui)
+        const toast = {
+            success: (message) => {
+                const toastEl = document.createElement('div');
+                toastEl.className = 'custom-toast success-toast';
+                toastEl.textContent = message;
+                document.body.appendChild(toastEl);
+                setTimeout(() => toastEl.remove(), 4000);
+            },
+            error: (message) => {
+                const toastEl = document.createElement('div');
+                toastEl.className = 'custom-toast error-toast';
+                toastEl.textContent = message;
+                document.body.appendChild(toastEl);
+                setTimeout(() => toastEl.remove(), 4000);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Lógica do Menu Hamburguer (Copie e cole este bloco em todos os HTMLs)
+            const menuToggle = document.getElementById('menu-toggle');
+            const menuClose = document.getElementById('menu-close');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    mobileMenu.classList.add('mobile-menu-overlay--visible');
+                    document.body.style.overflow = 'hidden'; // Evita scroll do corpo
+                });
+            }
+
+            if (menuClose && mobileMenu) {
+                menuClose.addEventListener('click', () => {
+                    mobileMenu.classList.remove('mobile-menu-overlay--visible');
+                    document.body.style.overflow = 'auto'; // Restaura scroll do corpo
+                });
+            }
+
+            // Lógica do Formulário
+            const form = document.getElementById('volunteer-form');
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+
+                // 1. Coleta de dados e validação básica
+                const formData = {
+                    nomeCompleto: form.elements['nomeCompleto'].value,
+                    email: form.elements['email'].value,
+                    telefone: form.elements['telefone'].value,
+                    areaInteresse: form.elements['areaInteresse'].value,
+                    formacao: form.elements['formacao'].value,
+                    motivacao: form.elements['motivacao'].value,
+                    disponibilidade: form.elements['disponibilidade'].value,
+                };
+
+                let isValid = true;
+                const fields = form.querySelectorAll('[required]');
+                
+                fields.forEach(field => {
+                    if (!field.value) {
+                        isValid = false;
+                    }
+                });
+
+                if (!isValid) {
+                    toast.error('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
+
+                console.log('Formulário de Voluntariado Submetido:', formData);
+                
+                // 2. Simulação de envio
+                toast.success('Inscrição enviada com sucesso! Entraremos em contato em breve para a próxima etapa.');
+                
+                // 3. Resetar formulário
+                form.reset();
+            };
+
+            if (form) {
+                form.addEventListener('submit', handleSubmit);
+            }
+
+        });
+    </script>
+</body>
+</html>
