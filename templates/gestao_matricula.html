@@ -149,7 +149,7 @@
         .btn-acao { 
             padding: 0.6rem 1rem; 
             background-color: var(--cor-alerta); /* Vermelho para Cancelar */
-            color: white; 
+            color: rgb(0, 83, 4); 
             border: none; 
             border-radius: 5px; 
             cursor: pointer; 
@@ -268,7 +268,7 @@
                     <td>{{ curso.professor.nomeProfessor or 'N/A' }}</td>
                     <td>
                         <form action="{{ url_for('cancelar_matricula', aluno_id=aluno.id_Aluno, curso_id=curso.id_Curso) }}" method="POST" style="display: inline;">
-                            <button type="submit" class="btn-acao" onclick="return confirm('Tem certeza que deseja cancelar a matrícula em {{ curso.nome }}?')">
+                            <button type="submit" class="btn btn-acao" onclick="return confirm('Tem certeza que deseja cancelar a matrícula em {{ curso.nome }}?')">
                                 <span class="material-icons">remove_circle_outline</span> Cancelar Matrícula
                             </button>
                         </form>

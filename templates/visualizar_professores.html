@@ -284,8 +284,8 @@
                         <td>{{ professor.raca.descricao or 'N/A' }}</td>
                         <td>{{ professor.pcd.descricao or 'N/A' }}</td>
                         <td>
-                            <a href="{{ url_for('editar_professor', professor_id=professor.id_Professor) }}" class="btn-acao" title="Editar">
-                                <span class="material-icons">edit</span> Editar
+                    <!--      <a href="{{ url_for('editar_professor', professor_id=professor.id_Professor) }}" class="btn-acao" title="Editar"> 
+                                <span class="material-icons">edit</span> Editar -->
                             </a>
                             <form action="{{ url_for('excluir_professor', professor_id=professor.id_Professor) }}" method="POST" style="display: inline;">
                                 <button type="submit" class="btn-acao" title="Excluir">
