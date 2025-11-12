@@ -235,8 +235,8 @@
                         <td>{{ curso.turno.value or 'N/A' }}</td>
                         <td>{{ curso.professor.nomeProfessor or 'N/A' }}</td>
                         <td>
-                     <!--     <a href="{{ url_for('editar_curso', curso_id=curso.id_Curso) }}" class="btn-acao" title="Editar">
-                                <span class="material-icons">edit</span> Editar -->
+                          <a href="{{ url_for('editar_curso', curso_id=curso.id_Curso) }}" class="btn-acao" title="Editar">
+                                <span class="material-icons">edit</span> Editar 
                             </a>
                             <form action="{{ url_for('excluir_curso', curso_id=curso.id_Curso) }}" method="POST" style="display: inline;">
                                 <button type="submit" class="btn-acao" title="Excluir">

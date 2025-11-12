@@ -32,7 +32,7 @@
         }
 
         .header {
-            background-color: var(--cor-fundo);
+            background-color: var(--cor-principal);
             padding: 1rem;
             display: flex;
             align-items: center;
@@ -290,9 +290,14 @@
                         <td>{{ turma.descricao or 'N/A' }}</td>
                         <td>{{ turma.turno or 'N/A' }}</td>
                         <td>
-                                                     
+
+                            {# Botão Editar #}
+                            <a href="{{ url_for('editar_turma', turma_id=turma.id_Turma) }}" class="btn-acao" title="Editar">
+                                <span class="material-icons">search</span> Editar
+                            </a>
+
                             {# Botão Detalhes #}
-                            <a href="{{ url_for('detalhes_turma', turma_id=turma.id_Turma) }}" class="btn-acao btn-success" title="Detalhes">
+                            <a href="{{ url_for('detalhes_turma', turma_id=turma.id_Turma) }}" class="btn-acao" title="Detalhes">
                                 <span class="material-icons">search</span> Detalhes
                             </a>
                             
