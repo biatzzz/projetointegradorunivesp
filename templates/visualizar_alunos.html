@@ -241,7 +241,7 @@
             }
             
             table {
-                min-width: 1300px; Aumentado para acomodar a nova coluna de ações */
+                min-width: 1300px; 
             }
         }
 
@@ -277,6 +277,7 @@
 
         <main>
             <h1>Alunos Cadastrados</h1>
+
             <div class="contador">Total de Alunos: <span id="total-alunos">{{ alunos|length }}</span></div>
 
             <div class="filtros">
@@ -292,7 +293,7 @@
 
             <div class="sem-resultados" id="sem-resultados">Nenhum aluno encontrado com os filtros aplicados.</div>
 
-            <table style="width: auto; border-collapse: collapse;">
+            <table id="tabela-alunos" style="width: auto; border-collapse: collapse;">
                 <thead>
                     <tr>
                         <th onclick="ordenarTabela(0)">Nome</th>
@@ -310,7 +311,10 @@
                 </thead>
                 <tbody>
                     {% for aluno in alunos %}
-                    <tr id="aluno-{{ loop.index }}" data-nome="{{ aluno.nome|lower }}" data-cpf="{{ aluno.cpf }}" data-curso="{{ aluno.turma_id }}">
+                    <tr id="aluno-{{ loop.index }}" 
+                        data-nome="{{ aluno.nome|lower }}" 
+                        data-cpf="{{ aluno.cpf }}" 
+                        data-curso="{{ aluno.turma_id }}">
                         <td data-full="{{ aluno.nome }}">{{ aluno.nome }}</td>
                         <td data-sort="{{ aluno.dt_nasc }}" data-full="{{ aluno.dt_nasc }}">{{ aluno.dt_nasc }}</td>
                         <td data-full="{{ aluno.cpf }}">{{ aluno.cpf }}</td>
