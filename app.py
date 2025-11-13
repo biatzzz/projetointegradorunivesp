@@ -40,7 +40,6 @@ def to_int(value):
 # --------------------------
 @app.route('/')
 def home():
-    """Renderiza a página inicial, que contém a Seção CTA completa."""
     return render_template('index.html')
 
 # --------------------------
@@ -238,14 +237,38 @@ def detalhes_turma(turma_id):
         if not turma:
             return "Turma não encontrada.", 404
         
-        # NOVO: Calcular relatório de faltas para cada aluno (IMPORTANTE PARA O HTML)
+        # 1. Calcular relatório de faltas para cada aluno
         relatorios_alunos = {}
         for aluno in turma.alunos:
-            # Chama a função do seu frequencia_crud.py
             relatorios_alunos[aluno.id_Aluno] = frequencia_crud.calcular_faltas_por_aluno(session, aluno.id_Aluno)
+
+        # 2. Reestruturar a lista de alunos para incluir os dados do relatório
+        alunos_com_relatorio = []
+        for aluno in turma.alunos:
+            relatorio = relatorios_alunos[aluno.id_Aluno]
+            
+            # Garante que o objeto aluno tenha todas as propriedades do relatório
+            aluno_data = {
+                'aluno': aluno,
+                'relatorio': relatorio
+            }
+            alunos_com_relatorio.append(aluno_data)
+
+        # 3. Lógica de Ordenação (NOVO!)
+        ordem_risco = request.args.get('ordem') == 'risco'
         
-    # Manda a turma e os relatórios para o template
-    return render_template('detalhes_turma.html', turma=turma, relatorios_alunos=relatorios_alunos)
+        if ordem_risco:
+            # Ordena por % de Presença (menor para maior)
+            alunos_com_relatorio.sort(key=lambda x: (
+                (x['relatorio']['presente'] / x['relatorio']['total_aulas_validas'] * 100) 
+                if x['relatorio']['total_aulas_validas'] > 0 else 100 # Se 0 aulas, coloca 100% (baixo risco)
+            ), reverse=False) # reverse=False para ordenar do MENOR % para o MAIOR (risco alto no topo)
+        
+    # Manda a turma e a lista ordenada/completa para o template
+    return render_template('detalhes_turma.html', 
+                           turma=turma, 
+                           alunos_com_relatorio=alunos_com_relatorio,
+                           ordem_risco=ordem_risco)
 
 # U (UPDATE) e R (READ One) para o formulário de edição
 @app.route('/editar-turma/<int:turma_id>', methods=['GET', 'POST'])
@@ -390,6 +413,12 @@ def visualizar_professores():
 @app.route('/editar-professor/<int:professor_id>', methods=['GET', 'POST'])
 def editar_professor(professor_id):
     with Session(db.engine) as session:
+        # Carrega os dados de referência para o método GET (e para repassar em caso de erro no POST)
+        generos = session.query(db.Genero).all()
+        racas = session.query(db.Raca).all()
+        pcds = session.query(db.Pcd).all()
+        
+        # Busca o professor
         professor = professor_crud.buscar_professor_por_id(session, professor_id)
         
         if professor is None:
@@ -399,25 +428,33 @@ def editar_professor(professor_id):
             dados_do_form = request.form.to_dict()
             dados_tratados = {}
             
+            # 1. Trata e Converte IDs
             for k in ['id_Genero', 'id_Pcd', 'id_Raca']:
                 if dados_do_form.get(k):
                     dados_tratados[k] = to_int(dados_do_form.get(k))
             
+            # 2. Trata e Mapeia Campos de Texto
             for k in ['cpf', 'email', 'telefone', 'endereco']:
                 if dados_do_form.get(k):
                     dados_tratados[k] = dados_do_form.get(k)
                     
             if dados_do_form.get('nome'):
+                # Mapeia o campo 'nome' do HTML para o atributo 'nomeProfessor' do modelo
                 dados_tratados['nomeProfessor'] = dados_do_form.get('nome')
 
+            # === LINHA CRÍTICA QUE ESTAVA FALTANDO/PROBLEMATIZANDO ===
             resultado = professor_crud.atualizar_professor(session, professor_id, dados_tratados)
-            
-            if isinstance(resultado, dict) and 'erro' in resultado:
-                return resultado['erro'], 409
+            # =========================================================
 
+            if isinstance(resultado, dict) and 'erro' in resultado:
+                # Se houver erro de integridade (CPF/Email duplicado), retorna para o formulário
+                return render_template('editar_professor.html', professor=professor, generos=generos, racas=racas, pcds=pcds, erro=resultado['erro']), 409
+
+            # Se for bem-sucedido (resultado é o objeto Professor ou True), redireciona
             return redirect(url_for('visualizar_professores'))
 
-        return render_template('editar_professor.html', professor=professor)
+        # Método GET: Renderiza o formulário
+        return render_template('editar_professor.html', professor=professor, generos=generos, racas=racas, pcds=pcds)
 
 # D (DELETE)
 @app.route('/excluir-professor/<int:professor_id>', methods=['POST'])
@@ -573,32 +610,10 @@ def cancelar_matricula(aluno_id, curso_id):
 # FIM: ROTAS DE MATRÍCULA
 # =================================================================
 
-@app.route('/processo-seletivo')
-def processo_seletivo():
-    # Certifique-se de que este template existe na pasta /templates
-    return render_template('processo-seletivo.html')
+@app.route('/contato')
+def contato():
+    return render_template('contato.html')
 
-@app.route('/sobre')
-def sobre():
-    # Certifique-se de que este template existe na pasta /templates
-    return render_template('sobre.html')
-
-@app.errorhandler(404)
-def page_not_found(e):
-    # Lida com o erro 404 redirecionando para a Home
-    return redirect(url_for('home'))
-
-SVG_PATHS = {
-    "p3427ca80": "M40.0,0.0 C44.2,0.0 48.0,3.8 48.0,8.0 L48.0,16.0 C48.0,20.2 44.2,24.0 40.0,24.0 L8.0,24.0 C3.8,24.0 0.0,20.2 0.0,16.0 L0.0,8.0 C0.0,3.8 3.8,0.0 8.0,0.0 L40.0,0.0 Z M40.0,2.0 L8.0,2.0 C4.9,2.0 2.0,4.9 2.0,8.0 L2.0,16.0 C2.0,19.1 4.9,22.0 8.0,22.0 L40.0,22.0 C43.1,22.0 46.0,19.1 46.0,16.0 L46.0,8.0 C46.0,4.9 43.1,2.0 40.0,2.0 Z M12.0,6.0 L36.0,6.0 L36.0,18.0 L12.0,18.0 L12.0,6.0 Z M38.0,2.0 L38.0,4.0 L38.0,6.0 L40.0,6.0 L40.0,4.0 L40.0,2.0 Z M38.0,18.0 L38.0,20.0 L38.0,22.0 L40.0,22.0 L40.0,20.0 L40.0,18.0 Z M8.0,2.0 L10.0,2.0 L10.0,4.0 L8.0,4.0 L8.0,2.0 Z M4.0,6.0 L6.0,6.0 L6.0,8.0 L4.0,8.0 L4.0,6.0 Z M2.0,10.0 L4.0,10.0 L4.0,12.0 L2.0,12.0 L2.0,10.0 Z M4.0,14.0 L6.0,14.0 L6.0,16.0 L4.0,16.0 L4.0,14.0 Z M8.0,20.0 L10.0,20.0 L10.0,22.0 L8.0,22.0 L8.0,20.0 Z",
-    "pa8cae40": "M20.0,0.0 C8.9,0.0 0.0,8.9 0.0,20.0 C0.0,31.1 8.9,40.0 20.0,40.0 C31.1,40.0 40.0,31.1 40.0,20.0 C40.0,8.9 31.1,0.0 20.0,0.0 Z M20.0,2.0 C30.0,2.0 38.0,10.0 38.0,20.0 C38.0,30.0 30.0,38.0 20.0,38.0 C10.0,38.0 2.0,30.0 2.0,20.0 C2.0,10.0 10.0,2.0 20.0,2.0 Z M20.0,5.0 C11.7,5.0 5.0,11.7 5.0,20.0 C5.0,28.3 11.7,35.0 20.0,35.0 C28.3,35.0 35.0,28.3 35.0,20.0 C35.0,11.7 28.3,5.0 20.0,5.0 Z M20.0,7.0 C27.2,7.0 33.0,12.8 33.0,20.0 C33.0,27.2 27.2,33.0 20.0,33.0 C12.8,33.0 7.0,27.2 7.0,20.0 C7.0,12.8 12.8,7.0 20.0,7.0 Z M20.0,9.0 C13.9,9.0 9.0,13.9 9.0,20.0 C9.0,26.1 13.9,31.0 20.0,31.0 C26.1,31.0 31.0,26.1 31.0,20.0 C31.0,13.9 26.1,9.0 20.0,9.0 Z M20.0,11.0 C25.0,11.0 29.0,15.0 29.0,20.0 C29.0,25.0 25.0,29.0 20.0,29.0 C15.0,29.0 11.0,25.0 11.0,20.0 C11.0,15.0 15.0,11.0 20.0,11.0 Z M20.0,13.0 C16.1,13.0 13.0,16.1 13.0,20.0 C13.0,23.9 16.1,27.0 20.0,27.0 C23.9,27.0 27.0,23.9 27.0,20.0 C27.0,16.1 23.9,13.0 20.0,13.0 Z M20.0,15.0 C17.2,15.0 15.0,17.2 15.0,20.0 C15.0,22.8 17.2,25.0 20.0,25.0 C22.8,25.0 25.0,22.8 25.0,20.0 C25.0,17.2 22.8,15.0 20.0,15.0 Z M20.0,17.0 C18.3,17.0 17.0,18.3 17.0,20.0 C17.0,21.7 18.3,23.0 20.0,23.0 C21.7,23.0 23.0,21.7 23.0,20.0 C23.0,18.3 21.7,17.0 20.0,17.0 Z M20.0,19.0 C19.4,19.0 19.0,19.4 19.0,20.0 C19.0,20.6 19.4,21.0 20.0,21.0 C20.6,21.0 21.0,20.6 21.0,20.0 C21.0,19.4 20.6,19.0 20.0,19.0 Z",
-    "p2e7276f2": "M0.0,0.0 C0.0,0.0 40.0,0.0 40.0,0.0 C40.0,0.0 40.0,32.0 40.0,32.0 C40.0,32.0 0.0,32.0 0.0,32.0 C0.0,32.0 0.0,0.0 0.0,0.0 Z M2.0,2.0 C2.0,2.0 2.0,30.0 2.0,30.0 C2.0,30.0 38.0,30.0 38.0,30.0 C38.0,30.0 38.0,2.0 38.0,2.0 C38.0,2.0 2.0,2.0 2.0,2.0 Z M4.0,4.0 C4.0,4.0 4.0,28.0 4.0,28.0 C4.0,28.0 36.0,28.0 36.0,28.0 C36.0,28.0 36.0,4.0 36.0,4.0 C36.0,4.0 4.0,4.0 4.0,4.0 Z M6.0,6.0 C6.0,6.0 6.0,26.0 6.0,26.0 C6.0,26.0 34.0,26.0 34.0,26.0 C34.0,26.0 34.0,6.0 34.0,6.0 C34.0,6.0 6.0,6.0 6.0,6.0 Z M8.0,8.0 C8.0,8.0 8.0,24.0 8.0,24.0 C8.0,24.0 32.0,24.0 32.0,24.0 C32.0,24.0 32.0,8.0 32.0,8.0 C32.0,8.0 8.0,8.0 8.0,8.0 Z M10.0,10.0 C10.0,10.0 10.0,22.0 10.0,22.0 C10.0,22.0 30.0,22.0 30.0,22.0 C30.0,22.0 30.0,10.0 30.0,10.0 C30.0,10.0 10.0,10.0 10.0,10.0 Z M12.0,12.0 C12.0,12.0 12.0,20.0 12.0,20.0 C12.0,20.0 28.0,20.0 28.0,20.0 C28.0,20.0 28.0,12.0 28.0,12.0 C28.0,12.0 12.0,12.0 12.0,12.0 Z M14.0,14.0 C14.0,14.0 14.0,18.0 14.0,18.0 C14.0,18.0 26.0,18.0 26.0,18.0 C26.0,18.0 26.0,14.0 26.0,14.0 C26.0,14.0 14.0,14.0 14.0,14.0 Z M16.0,16.0 C16.0,16.0 16.0,16.0 16.0,16.0 C16.0,16.0 24.0,16.0 24.0,16.0 C24.0,16.0 24.0,16.0 24.0,16.0 C24.0,16.0 16.0,16.0 16.0,16.0 Z",
-}
-# --------------------------
-# Rota SEJA VOLUNTÁRIO
-# --------------------------
-@app.route('/seja-voluntario', methods=['GET', 'POST'])
-def seja_voluntario():
-    return render_template('seja-voluntario.html')
 
 
 # --------------------------

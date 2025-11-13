@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhes da Turma: {{ turma.nome }}</title>
+    <title>Detalhes Turma</title>
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     
     <style>
+
+        table {
+         width: auto;               /* faz a tabela se ajustar ao conteúdo */
+         table-layout: auto;        /* desativa o layout fixo */
+        border-collapse: collapse; /* opcional, só pra deixar mais bonitinho */
+        }
+
+        th, td {
+         padding: 8px;
+         border: 1px solid #ccc;
+        white-space: nowrap; /* impede quebra de linha, se quiser manter tudo em uma linha só */
+        }
+
         /* ==================================== */
-        /* PALETA DE CORES (Verde Musgo) - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* PALETA DE CORES (Verde Musgo) - Consistente com visualizar_alunos.html */
         /* ==================================== */
         :root {
             --cor-principal: #4d8d78; /* Verde Musgo */
@@ -19,18 +32,16 @@
             --cor-titulo: #305e52;
             --cor-fundo: #f9f9f9;
         }
-
+        
         /* ==================================== */
-        /* ESTRUTURA E CENTRALIZAÇÃO - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ESTRUTURA E LAYOUT GERAL - Consistente com visualizar_alunos.html */
         /* ==================================== */
-        body { 
-            font-family: sans-serif; 
-            margin: 0; 
-            background-color: var(--cor-fundo); 
-        }
-
-        .pagina-principal {
+        body {
+            font-family: sans-serif;
+            font-size: 16px;
             background-color: var(--cor-fundo);
+            margin: 0;
+            padding: 0;
         }
 
         .header {
@@ -56,10 +67,6 @@
             align-items: center;
         }
 
-        .logo-link {
-            text-decoration: none;
-        }
-        
         .logo-circle {
             background-color: white;
             border-radius: 50%;
@@ -103,162 +110,144 @@
             margin: 0 auto;
         }
 
-        .content-container {
-            max-width: 1100px; /* Mais largo para tabelas */
-            margin: 0 auto;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            border: 4px solid var(--cor-principal);
-            text-align: left;
-        }
-
         h1 {
             color: var(--cor-titulo);
             font-family: 'Bebas Neue', cursive; 
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        h2 {
-            color: var(--cor-titulo);
-            font-size: 1.5rem;
-            margin-top: 25px;
-            border-bottom: 2px solid var(--cor-principal);
-            padding-bottom: 5px;
-            text-align: left;
-        }
-        
-        /* Estilos de Informações da Turma */
-        .info-box {
-            background: #e9f0ec; /* Cor de fundo mais clara para destacar o bloco */
-            padding: 15px; 
-            border-left: 5px solid var(--cor-principal); 
-            margin-bottom: 20px; 
-            border-radius: 4px;
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 1.1rem;
-        }
-        
-        .info-box p {
-            margin: 0;
-            flex-basis: 48%; /* Duas colunas em telas maiores */
         }
 
-        /* Estilos de Lista (Cursos) */
-        ul { 
-            list-style: none; 
-            padding: 0; 
-        }
-        
-        li { 
-            background: #f4f4f4; 
-            margin-bottom: 5px; 
-            padding: 10px; 
-            border-radius: 4px; 
-            border: 1px solid #ddd;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
         /* ==================================== */
-        /* TABELA (Padronização) */
+        /* ELEMENTOS DE CONTEÚDO (Contador) */
         /* ==================================== */
-        table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            margin-top: 15px; 
-            font-size: 0.9rem;
-        }
-        
-        th, td { 
-            border: 1px solid #ddd; 
-            padding: 10px; 
-            text-align: left; 
-            word-wrap: break-word;
-        }
-        
-        th { 
-            background-color: var(--cor-principal); 
-            color: white; 
-            font-size: 1rem; 
-            text-align: center;
-        }
-        
-        td {
-            background-color: #fff;
-            text-align: center;
-        }
-
-        /* Ações na Tabela e Botões */
-        .btn-acao { 
-            text-decoration: none; 
-            padding: 5px 8px; 
-            border-radius: 4px; 
-            margin: 2px;
-            display: inline-block;
-            font-size: 0.8rem;
-            font-weight: bold;
-            transition: opacity 0.2s;
-        }
-
-        .btn-acao:hover {
-            opacity: 0.8;
-        }
-
-        /* Ações Específicas de Chamada/Matrícula */
-        .btn-lancar-chamada {
+        .contador {
             background-color: var(--cor-principal);
             color: white;
-            padding: 0.7rem 1.5rem; 
-            font-size: 1rem;
-            margin-top: 10px;
-            border-radius: 5px;
-            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
             display: inline-block;
-            transition: background-color 0.3s;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
         }
-        
-        .btn-lancar-chamada:hover {
+
+        /* ==================================== */
+        /* TABELA */
+        /* ==================================== */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            table-layout: fixed;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            word-wrap: break-word;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--cor-principal);
+            color: white;
+            font-size: 1rem;
+            position: sticky;
+            top: 80px;
+            cursor: pointer;
+            user-select: none;
+            text-align: center;
+        }
+
+        th:hover {
             background-color: var(--cor-hover);
         }
 
-        /* Estilo Voltar (Padronizado) */
-        .btn-voltar { 
-            background-color: #fff; 
-            color: var(--cor-principal); 
-            border: 1px solid var(--cor-principal);
-            padding: 0.7rem 1.5rem;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-block;
-            margin-top: 20px;
-            transition: background-color 0.3s;
+        td {
+            background-color: #fff;
+            position: relative;
+            text-align: center;
         }
         
-        .btn-voltar:hover { 
-            background-color: var(--cor-fundo); 
+        /* -------------------------- */
+        /* LARGURAS DAS COLUNAS AJUSTADAS (Professores) */
+        /* -------------------------- */
+        th:nth-child(1), td:nth-child(1) { width: 15%; } /* Nome */
+        th:nth-child(2), td:nth-child(2) { width: 10%; } /* CPF */
+        th:nth-child(3), td:nth-child(3) { width: 10%; } /* Email */
+        th:nth-child(4), td:nth-child(4) { width: 10%; } /* Telefone */
+        th:nth-child(5), td:nth-child(5) { width: 8%; }  /* Gênero */
+        th:nth-child(6), td:nth-child(6) { width: 7%; }  /* Raça */
+        th:nth-child(7), td:nth-child(7) { width: 10%; } /* PCD */
+        th:nth-child(8), td:nth-child(8) { 
+            width: 10%; /* Ações (Padronizado como visualizar_alunos.html) */
+            text-align: center;
         }
 
-        .button-group {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-top: 10px;
+        /* ==================================== */
+        /* BOTÕES DE AÇÃO (Com quebra de linha) - Consistente com visualizar_alunos.html */
+        /* ==================================== */
+        .btn-acao {
+            background-color: var(--cor-principal);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 19px;
+            text-decoration: none;
+            padding: 0.5rem 1rem; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0.5rem; /* Margem vertical para empilhamento */
+            transition: background-color 0.3s;
+            white-space: nowrap;
         }
-        /* Ajuste para o grupo de botões na listagem de cursos */
-        li .button-group {
-            margin-top: 0;
-            justify-content: flex-start;
+
+        .btn-acao:hover {
+            background-color: var(--cor-hover);
+        }
+        
+        .btn-acao span.material-icons {
+            margin-right: 5px;
+            font-size: 18px !important; 
+        }
+
+        .btn-voltar {
+            background-color: var(--cor-principal);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 0.5rem 1rem; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0.5rem; /* Margem vertical para empilhamento */
+            transition: background-color 0.3s;
+            white-space: nowrap;
+        }
+
+        .btn-voltar:hover {
+            background-color: var(--cor-hover);
+        }
+
+        /* Responsividade para telas menores */
+        @media screen and (max-width: 1200px) {
+            main {
+                overflow-x: auto;
+                padding: 1rem;
+            }
+            
+            table {
+                min-width: 1000px; /* Ajustado para caber o conteúdo */
+            }
         }
     </style>
 </head>
+
 <body class="pagina-principal">
 
     {% set logo_header_url = url_for('static', filename='logo.png') %}
@@ -285,125 +274,122 @@
                 </div>
             </div>
         </header>
-        <main>
-            <div class="content-container">
-                <h1>Detalhes da Turma: {{ turma.nome }}</h1>
 
-                <div class="info-box">
-                    <p><strong>ID da Turma:</strong> {{ turma.id_Turma }}</p>
-                    <p><strong>Descrição:</strong> {{ turma.descricao or 'N/A' }}</p>
-                    <p><strong>Turno:</strong> {{ turma.turno or 'N/A' }}</p>
-                    <p><strong>Total de Alunos:</strong> {{ turma.alunos | length }}</p>
-                </div>
-                
-                
-                <h2>Histórico de Chamadas ({% if aulas %}{{ aulas | length }}{% else %}0{% endif %} aulas)</h2>
+    <main>
+            <h1>Detalhes da Turma: {{ turma.nome }}</h1>
 
-                {% if aulas %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Tópico/Assunto</th>
-                            <th>Presenças</th>
-                            <th>Faltas</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for aula in aulas %}
-                        <tr>
-                            <td>{{ aula.data.strftime('%d/%m/%Y') }}</td>
-                            <td>{{ aula.topico or 'N/A' }}</td>
-                            
-                            {% set presencas = aula.presencas | selectattr('status', '==', 'presente') | list | length if aula.presencas else 0 %}
-                            {% set faltas = aula.presencas | selectattr('status', '==', 'falta') | list | length if aula.presencas else 0 %}
-                            
-                            <td style="color: green; font-weight: bold;">{{ presencas }}</td>
-                            <td style="color: red; font-weight: bold;">{{ faltas }}</td>
-                            <td>
-                                <a href="{{ url_for('visualizar_chamada', aula_id=aula.id_Aula) }}" class="btn-acao" style="background-color: #2a6496; color: white;">Ver</a>
-                                <a href="{{ url_for('editar_chamada', aula_id=aula.id_Aula) }}" class="btn-acao" style="background-color: #f0ad4e; color: white;">Editar</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+
+    <a href="{{ url_for('lancar_chamada', turma_id=turma.id_Turma) }}" class="btn btn-acao">
+        Lançar Chamada para Hoje
+    </a>
+
+     <div class="button-group">
+
+    <a href="{{ url_for('detalhes_turma', turma_id=turma.id_Turma, ordem='risco') }}" 
+       class="btn btn-acao">
+        Ordenar por % Presença
+    </a>
+    
+    <a href="{{ url_for('detalhes_turma', turma_id=turma.id_Turma) }}" 
+       class="btn btn-acao">
+        Exibição Normal
+    </a>
+
+
+</div>
+
+            
+        </header>
+
+        <div class="info-box">
+        <h2>   <p><strong>ID:</strong> {{ turma.id_Turma }}</p>
+            <p><strong>Descrição:</strong> {{ turma.descricao or 'N/A' }}</p>
+            <p><strong>Turno:</strong> {{ turma.turno or 'N/A' }}</p> </h2> 
+        </div>
+
+        <h2>Alunos nesta turma: {{ turma.alunos | length }}</h2>
+
+<table style="width: auto; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Aulas Totais</th>
+            <th>Presenças</th>
+            <th>Faltas</th>
+            <th>Justificadas</th>
+            <th>% de Presença</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+<tbody>
+        {% for item in alunos_com_relatorio %}
+        {% set aluno = item.aluno %}
+        {% set relatorio = item.relatorio %}
+        
+        {% set total_aulas = relatorio.total_aulas_validas %}
+        {% set presencas = relatorio.presente %}
+        {% set percentual_presenca = (presencas / total_aulas * 100) if total_aulas > 0 else 100 %}
+
+        <tr>
+            <td>{{ aluno.id_Aluno }}</td>
+            <td>{{ aluno.nome }}</td>
+            <td>{{ aluno.email }}</td>
+
+            <td>{{ relatorio.total_aulas }}</td> 
+            <td>{{ presencas }}</td>
+            <td>{{ relatorio.falta }}</td>
+            <td>{{ relatorio.falta_justificada }}</td>
+            
+            <td style="font-weight: bold; color: 
+                {% if percentual_presenca < 50 %}
+                    red
+                {% elif percentual_presenca < 70 %}
+                    orange
                 {% else %}
-                    <p>Nenhuma chamada foi lançada para esta turma ainda.</p>
-                {% endif %}
-                
-                <div class="button-group" style="justify-content: flex-start;">
-                    <a href="{{ url_for('lancar_chamada', turma_id=turma.id_Turma) }}" class="btn-lancar-chamada">
-                        <span class="material-icons" style="vertical-align: middle;">check_box</span> Lançar Chamada
-                    </a>
-                </div>
-                
-                
-                <h2>Alunos Matriculados ({{ turma.alunos | length }})</h2>
+                    green
+                {% endif %};">
+                {{ "%.2f"|format(percentual_presenca) }}%
+            </td>
 
-                {% if turma.alunos %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Aulas Totais</th>
-                            <th>Presenças</th>
-                            <th>Faltas</th>
-                            <th>Justificadas</th>
-                            <th>% de Presença</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for aluno in turma.alunos %}
-                        {% set relatorio = relatorios_alunos.get(aluno.id_Aluno, {'total_aulas': 0, 'presente': 0, 'falta': 0, 'falta_justificada': 0}) %}
-                        {% set total_aulas = relatorio.total_aulas_validas if relatorio.total_aulas_validas is defined and relatorio.total_aulas_validas > 0 else 0 %}
-                        {% set presencas = relatorio.presente %}
-                        
-                        <tr>
-                            <td>{{ aluno.id_Aluno }}</td>
-                            <td>{{ aluno.nome }}</td>
-                            <td>{{ aluno.email }}</td>
-                            <td>{{ relatorio.total_aulas }}</td> 
-                            <td style="color: green;">{{ presencas }}</td>
-                            <td style="color: red;">{{ relatorio.falta }}</td>
-                            <td style="color: orange;">{{ relatorio.falta_justificada }}</td>
-                            
-                            {% set percentual_presenca = (presencas / total_aulas * 100) if total_aulas > 0 else 0 %}
-                            <td style="font-weight: bold; color: 
-                                {% if percentual_presenca < 50 %}
-                                    red
-                                {% elif percentual_presenca < 70 %}
-                                    orange
-                                {% else %}
-                                    green
-                                {% endif %};">
-                                {{ "%.2f"|format(percentual_presenca) }}%
-                            </td>
-                            <td>
-                                <a href="{{ url_for('gestao_matricula', aluno_id=aluno.id_Aluno) }}" class="btn-acao" style="background-color: var(--cor-principal); color: white;">Matrícula</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                    <p>Nenhum aluno cadastrado nesta turma.</p>
-                {% endif %}
-           
+            <td>
+                {# Botão Editar #}
+                <a href="{{ url_for('editar_aluno', aluno_id=aluno.id_Aluno) }}"class="btn-voltar" title="Editar">
+                <span class="material-icons">edit</span> Editar
+                </a>
 
-                
-                
-                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #ccc;">
+                {# Botão Detalhes #}
+                <a href="{{ url_for('gestao_matricula', aluno_id=aluno.id_Aluno) }}" class="btn-voltar" title="Matrículas">
+                    <span class="material-icons">search</span> Matriculas
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-                <a href="{{ url_for('visualizar_turmas') }}" class="btn-voltar">Voltar para a Lista de Turmas</a>
-                
-            </div>
-        </main>
+{% if not turma.alunos %}
+    <p>Nenhum aluno cadastrado nesta turma.</p>
+{% endif %}
+
+        <h2>Cursos Associados a Esta Turma ({{ turma.cursos | length }})</h2>
+        {% if turma.cursos %}
+            <ul>
+                {% for curso in turma.cursos %}
+                    <li>
+                        <strong>{{ curso.nome }}</strong> - Professor: {{ curso.professor.nomeProfessor or 'N/A' }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum curso associado a esta turma.</p>
+        {% endif %}
+
+        <p><a href="{{ url_for('visualizar_turmas') }}" class="btn btn-acao">Voltar para a Lista de Turmas</a></p>
     </div>
 
+</div>
+</main>
 </body>
 </html>
