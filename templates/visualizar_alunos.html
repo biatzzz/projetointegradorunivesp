@@ -320,8 +320,11 @@
                         <td data-full="{{ aluno.cpf }}">{{ aluno.cpf }}</td>
                         <td data-full="{{ aluno.email }}">{{ aluno.email }}</td>
                         <td data-full="{{ aluno.telefone }}">{{ aluno.telefone }}</td>
-                        <td data-sort="{{ aluno.datamatricula }}" data-full="{{ aluno.datamatricula }}">{{ aluno.datamatricula }}</td>
-                        <td data-sort="{{ aluno.dataconclusao }}" data-full="{{ aluno.dataconclusao }}">{{ aluno.dataconclusao }}</td>
+                        <td data-sort="{{ aluno.dt_matricula }}" data-full="{{ aluno.dt_matricula }}">
+                            {{ aluno.dt_matricula.strftime('%d/%m/%Y') if aluno.dt_matricula else '' }}</td>
+
+                        <td data-sort="{{ aluno.dt_conclusao }}" data-full="{{ aluno.dt_conclusao }}">
+                             {{ aluno.dt_conclusao.strftime('%d/%m/%Y') if aluno.dt_conclusao else '' }}</td>
                         <td data-full="{{ aluno.endereco }}">{{ aluno.endereco }}</td>
                         <td data-full="{{ aluno.observacoes }}">{{ aluno.observacoes }}</td>
                         <td data-full="{{ aluno.turma.nome }}">{{ aluno.turma.nome }}</td>
