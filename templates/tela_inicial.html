@@ -154,7 +154,23 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 8px rgba(0,0,0,0.15);
         }
-        
+        .logout-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: #b9b9b9; /* vermelho */
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.2s;
+       }
+
+.logout-btn:hover {
+    background-color: #c53030; /* vermelho mais escuro no hover */
+    transform: translateY(-2px);
+}
         .dashboard-separator {
             margin: 3rem 0;
             border: 0;
@@ -213,6 +229,11 @@
                         <h1 class="logo-title">Helena Pignatari</h1>
                     </div>
                 </div>
+                <div class="logout-area">
+                     <a href="{{ url_for('login') }}" class="btn logout-btn px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                Sair
+            </a>
+        </div>
             </div>
         </header>
         <main class="flex-grow">
