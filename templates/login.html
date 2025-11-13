@@ -8,6 +8,88 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
+        :root {
+            --cor-principal: #4d8d78; /* Verde Musgo */
+            --cor-hover: #3b705e;
+            --cor-titulo: #305e52;
+            --cor-fundo: #f9f9f9;
+        }
+
+        /* ==================================== */
+        /* ESTRUTURA E LAYOUT GERAL - COPIADO DO CADASTRAR-ALUNO.HTML */
+        /* ==================================== */
+        body { 
+            font-family: sans-serif; 
+            margin: 0; 
+            background-color: var(--cor-fundo); 
+        }
+
+        .header {
+            background-color: var(--cor-fundo);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-link {
+            text-decoration: none;
+        }
+
+        .logo-circle {
+            background-color: white;
+            border-radius: 50%;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 60px;
+            width: 60px;
+            margin-right: 15px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: 50px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: white;
+            line-height: 1.1;
+        }
+
+        .logo-subtitle {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .logo-title {
+            margin: 0;
+            font-family: 'Bebas Neue', cursive; 
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+        }
+
+        main {
+            padding: 2rem;
+            text-align: center;
+        }
+
         /* Estilos para centralizar o conteúdo principal verticalmente */
         .main-content.centered-login {
             display: flex;
@@ -84,6 +166,23 @@
             font-weight: bold;
             font-size: 1.1rem;
         }
+        .logout-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: #b9b9b9; /* vermelho */
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s, transform 0.2s;
+       }
+
+        .logout-btn:hover {
+            background-color: var(--cor-principal); /* vermelho mais escuro no hover */
+            transform: translateY(-2px);
+        }
 
         .btn-voltar:hover {
             background-color: var(--cor-hover); /* Cor de hover */
@@ -95,10 +194,11 @@
     </style>
 </head>
 <body class="pagina-principal">
-    {# Variáveis Jinja #}
-    {% set logo_header_url = url_for('static', filename='logo.png') %}
 
-    <div class="relative min-h-screen w-full">
+    {% set logo_header_url = url_for('static', filename='logo.png') %}
+    {% set logo_cursinho_url = url_for('static', filename='logo.png') %}
+
+    <div class="relative min-h-screen w-full flex flex-col">
         <header class="header">
             <div class="header-container">
                 <div class="logo-area">
@@ -118,8 +218,11 @@
                         <h1 class="logo-title">Helena Pignatari</h1>
                     </div>
                 </div>
-                
-                {# Cabeçalho simplificado, apenas o logo #}
+                <div class="logout-area">
+                     <a href="{{ url_for('home') }}" class="btn logout-btn px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                Retornar
+            </a>
+        </div>
             </div>
         </header>
 
