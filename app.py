@@ -149,10 +149,10 @@ def editar_aluno(aluno_id):
             # Trata Datas (CORRIGINDO OS NOMES)
             if dados_do_form.get('datanasc'):
                 dados_tratados['dt_nasc'] = to_date(dados_do_form.get('datanasc'))
-            if dados_do_form.get('datamatricula'):
-                dados_tratados['dt_matricula'] = to_date(dados_do_form.get('datamatricula'))
-            if dados_do_form.get('dataconclusao'):
-                dados_tratados['dt_conclusao'] = to_date(dados_do_form.get('dataconclusao'))
+            if dados_do_form.get('dtmatricula'):
+                dados_tratados['dt_matricula'] = to_date(dados_do_form.get('dt_matricula'))
+            if dados_do_form.get('dt_conclusao'):
+                dados_tratados['dt_conclusao'] = to_date(dados_do_form.get('dt_conclusao'))
 
             # Trata demais campos de texto
             for k in ['nome', 'cpf', 'email', 'telefone', 'endereco', 'observacoes']:
