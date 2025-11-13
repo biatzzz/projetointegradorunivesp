@@ -101,11 +101,13 @@
         /* TABELA */
         /* ==================================== */
         table {
-            width: 100%;
+            width: max-content;
             border-collapse: collapse;
             margin-bottom: 2rem;
-            table-layout: fixed;
+            table-layout: auto;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            white-space: nowrap; 
+            min-width: 100%;   
         }
 
         th, td {
@@ -139,6 +141,7 @@
         }
 
         td {
+            padding: 5px 5px;
             background-color: #fff;
             position: relative;
             text-align: center;
@@ -288,7 +291,7 @@
 
             <div class="sem-resultados" id="sem-resultados">Nenhum aluno encontrado com os filtros aplicados.</div>
 
-            <table id="tabela-alunos">
+            <table style="width: auto; border-collapse: collapse;">
                 <thead>
                     <tr>
                         <th onclick="ordenarTabela(0)">Nome</th>

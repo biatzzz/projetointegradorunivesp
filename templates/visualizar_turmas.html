@@ -3,13 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turmas Cadastradas</title>
+    <title>Detalhes Turma</title>
     
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     
     <style>
+
+        table {
+         width: auto;               /* faz a tabela se ajustar ao conteúdo */
+         table-layout: auto;        /* desativa o layout fixo */
+        border-collapse: collapse; /* opcional, só pra deixar mais bonitinho */
+        }
+
+        th, td {
+         padding: 8px;
+         border: 1px solid #ccc;
+        white-space: nowrap; /* impede quebra de linha, se quiser manter tudo em uma linha só */
+        }
+
         /* ==================================== */
         /* PALETA DE CORES (Verde Musgo) - Consistente com visualizar_alunos.html */
         /* ==================================== */
@@ -25,14 +38,14 @@
         /* ==================================== */
         body {
             font-family: sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             background-color: var(--cor-fundo);
             margin: 0;
             padding: 0;
         }
 
         .header {
-            background-color: var(--cor-principal);
+            background-color: var(--cor-fundo);
             padding: 1rem;
             display: flex;
             align-items: center;
@@ -121,7 +134,7 @@
         /* TABELA */
         /* ==================================== */
         table {
-            width: 100%; 
+            width: 100%;
             border-collapse: collapse;
             margin-bottom: 2rem;
             table-layout: fixed;
@@ -157,16 +170,17 @@
         }
         
         /* -------------------------- */
-        /* LARGURAS DAS COLUNAS AJUSTADAS (Turmas) */
+        /* LARGURAS DAS COLUNAS AJUSTADAS (Professores) */
         /* -------------------------- */
-        th:nth-child(1), td:nth-child(1) { width: 5%; }  /* ID */
-        th:nth-child(2), td:nth-child(2) { width: 15%; } /* Nome da Turma */
-        th:nth-child(3), td:nth-child(3) { width: 25%; } /* Descrição */
-        th:nth-child(4), td:nth-child(4) { width: 15%; } /* Turno */
-        th:nth-child(5), td:nth-child(5) { 
-            width: 40%; /* Ações (AUMENTADO para 40% para 3 botões) */
-            padding: 0.5rem; 
-            
+        th:nth-child(1), td:nth-child(1) { width: 15%; } /* Nome */
+        th:nth-child(2), td:nth-child(2) { width: 10%; } /* CPF */
+        th:nth-child(3), td:nth-child(3) { width: 10%; } /* Email */
+        th:nth-child(4), td:nth-child(4) { width: 10%; } /* Telefone */
+        th:nth-child(5), td:nth-child(5) { width: 8%; }  /* Gênero */
+        th:nth-child(6), td:nth-child(6) { width: 7%; }  /* Raça */
+        th:nth-child(7), td:nth-child(7) { width: 10%; } /* PCD */
+        th:nth-child(8), td:nth-child(8) { 
+            width: 10%; /* Ações (Padronizado como visualizar_alunos.html) */
             text-align: center;
         }
 
@@ -179,7 +193,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 19px;
             text-decoration: none;
             padding: 0.5rem 1rem; 
             display: inline-flex;
@@ -199,25 +213,21 @@
             font-size: 18px !important; 
         }
 
-        /* Estilo para o botão Detalhes (opcionalmente) */
-        .btn-success {
-            background-color: #3b705e; /* Um tom um pouco mais escuro para diferenciar */
-        }
-        
-        .btn-success:hover {
-            background-color: #2a5246; 
-        }
-
         .btn-voltar {
-            display: inline-block;
-            margin-top: 2rem;
-            padding: 1rem 2rem;
             background-color: var(--cor-principal);
             color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
+            padding: 0.5rem 1rem; 
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem 0.5rem; /* Margem vertical para empilhamento */
             transition: background-color 0.3s;
+            white-space: nowrap;
         }
 
         .btn-voltar:hover {
@@ -232,11 +242,12 @@
             }
             
             table {
-                min-width: 800px; 
+                min-width: 1000px; /* Ajustado para caber o conteúdo */
             }
         }
     </style>
 </head>
+
 <body class="pagina-principal">
 
     {% set logo_header_url = url_for('static', filename='logo.png') %}
@@ -268,7 +279,7 @@
             <h1>Turmas Cadastradas</h1>
             <div class="contador">Total de Turmas: <span id="total-turmas">{{ turmas|length }}</span></div>
 
-            <table id="tabela-turmas">
+            <table style="width: auto; border-collapse: collapse;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -292,18 +303,18 @@
                         <td>
 
                             {# Botão Editar #}
-                            <a href="{{ url_for('editar_turma', turma_id=turma.id_Turma) }}" class="btn-acao" title="Editar">
+                            <a href="{{ url_for('editar_turma', turma_id=turma.id_Turma) }}" class="btn-voltar" title="Editar">
                                 <span class="material-icons">edit</span> Editar
                             </a>
 
                             {# Botão Detalhes #}
-                            <a href="{{ url_for('detalhes_turma', turma_id=turma.id_Turma) }}" class="btn-acao" title="Detalhes">
+                            <a href="{{ url_for('detalhes_turma', turma_id=turma.id_Turma) }}" class="btn-voltar" title="Detalhes">
                                 <span class="material-icons">search</span> Detalhes
                             </a>
                             
                             {# Botão Excluir #}
                             <form action="{{ url_for('excluir_turma', turma_id=turma.id_Turma) }}" method="POST" style="display: inline;">
-                                <button type="submit" class="btn-acao" title="Excluir">
+                                <button type="submit" class="btn-voltar" title="Excluir">
                                     <span class="material-icons">delete</span> Excluir
                                 </button>
                             </form>
@@ -313,7 +324,7 @@
                 </tbody>
             </table>
 
-            <a href="{{ url_for('tela_inicial') }}" class="btn-voltar">Voltar para a Tela Inicial</a>
+            <a href="{{ url_for('tela_inicial') }}" class="btn-acao">Voltar para a Tela Inicial</a>
         </main>
     </div>
 
